@@ -1,0 +1,144 @@
+<resources>
+    <string name="app_name">DinarPay</string>
+    <string name="app_id">com.ssas.tpcms.android.provider</string>
+
+    <!--Image picker strings-->
+    <string name="pick_image">Pick image from</string>
+    <string name="cant_pick_image">Can\'t pick this image.</string>
+    <string-array name="source_items">
+        <item>Camera</item>
+        <item>Gallery</item>
+    </string-array>
+    <string name="location_permission_msg">Please turn on GPS location permission from settings to get device current location.</string>
+    <string name="camera_permission_msg">Please turn on camera permission from settings to upload image.</string>
+    <string name="gallary_permission_msg">Please turn on storage and media permissions from settings to upload image.
+    </string>
+
+    <!--Login screen-->
+
+    <string name="tripoli_police">Libya Embassy</string>
+    <string name="login_text">Login</string>
+    <string name="verify_now">Verify now</string>
+    <string name="user_id_text">User ID</string>
+    <string name="pascode_text">Passcode</string>
+    <string name="verify_user_text">Verify user</string>
+    <string name="verify_account_text">Verify account</string>
+    <string name="device_id">Device ID</string>
+    <string name="device_id_error">Please enter Device ID carefully.</string>
+
+    <!--Home Screen-->
+    <string name="dialy_notifications_text">Daily Notifications</string>
+    <string name="view_all_text">View all</string>
+    <string name="qr_card_reader">QR Card Reader</string>
+    <string name="crimnal_database_search">Crimnal Database Search</string>
+    <string name="report_crime">Report a Crime</string>
+    <string name="crime_report_history">Crime Report History</string>
+    <string name="back">Back</string>
+    <string name="criminalslist">Criminals List</string>
+    <string name="myProfile">My Profile</string>
+    <string name="signout">Sign out</string>
+
+    <!--Officer Card Detail-->
+    <string name="officer_card">Officer Card</string>
+    <string name="detected_officer">Detected Officer</string>
+    <string name="detected_vehicle">Detected Vehicle</string>
+    <string name="command_center">Commmand Center</string>
+    <string name="rank">Rank: </string>
+    <string name="unit">Unit: </string>
+    <string name="officer_id">Officer Id: </string>
+    <string name="expiry_date">Expire Date: </string>
+    <string name="permission_weapon">Permission to Carry Weapon: </string>
+    <string name="weapon_type">Weapon Type: </string>
+    <string name="weapon_number">Weapon SRL Number: </string>
+
+    <!--Vehicle card-->
+    <string name="vechicle_card">Vehicle Card</string>
+    <string name="id">ID</string>
+    <string name="plate_number">Plate Number</string>
+    <string name="permission_civiliance">Permission to Carry Civilians: </string>
+    <string name="permission_prisioners">Permission to Carry Perisioners: </string>
+    <string name="permission_night_pertrol">Permission for Night Petrol: </string>
+    <string name="permission_drive_outside_city">Permission for Night Petrol: </string>
+    <string name="yes">Yes</string>
+
+    <!--Mission Card -->
+    <string name="mission_card">Mission Card</string>
+    <string name="permission_weapon_during_mission">Permission to Carry Weapon during Mission: </string>
+    <string name="mission_type">Mission Type</string>
+    <string name="mission_desc">Mission Description</string>
+    <string name="other_notes">Other Notes</string>
+
+    <!--Crimnal Card-->
+    <string name="crimnal_card">Crimnal Card</string>
+    <string name="crimnal_name">Crimnal Name</string>
+    <string name="crime">Crime: </string>
+    <string name="status">Status: </string>
+    <string name="wanted_by">Wanted By: </string>
+    <string name="case_id">Case Id: </string>
+    <string name="flaged_date">Flaged Date: </string>
+    <string name="case_brief">Case Brief: </string>
+    <string name="report_arrest">Report Arrest</string>
+
+    <!--Crime Report Card-->
+    <string name="crime_report_card">Crime Report Card</string>
+    <string name="crime_type">Crime Type</string>
+    <string name="crime_scene">Crime Scene: </string>
+    <string name="suspectors">Suspects: </string>
+    <string name="reported_date">Reported Date: </string>
+    <string name="case_photos">Case Photos: </string>
+
+    <!--Roprt a crime-->
+    <string name="crime_location">Crime Location</string>
+    <string name="get_location">Get Location</string>
+    <string name="uload_Image">Upload Image</string>
+    <string name="suspect_name">Suspect Name(s) </string>
+    <string name="crime_name">Crime Name</string>
+    <string name="crime_brief">Crime Brief</string>
+    <string name="crime_scene_text">Crime Scene</string>
+    <string name="national_id">National ID</string>
+    <string name="passport_number">Passport Number</string>
+    <string name="driving_license_number">Driving License Number</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="suspect_known_address">Suspect Known Address</string>
+    <string name="submit">Submit</string>
+    <string name="add">Add</string>
+    <string name="optional">Optional</string>
+    <string name="search">Search</string>
+    <string name="select_country_code">Select Country Code</string>
+    <string name="confrim">Confirm</string>
+    <string name="country_hint">Select your Country</string>
+    <string name="type">Type</string>
+    <string name="location">Location</string>
+    <string name="choose">Choose</string>
+    <string name="crime_location_error">Please enter crime location.</string>
+    <string name="crime_type_error">Please select crime type.</string>
+    <string name="crime_name_error">Please enter crime name.</string>
+    <string name="alert">Alert</string>
+
+    <!--profile Strings-->
+    <string name="profile_card">Profile Card</string>
+    <string name="dateofbirth">Date of Birth</string>
+    <string name="mobile">Mobile: </string>
+    <string name="id_number">ID Number</string>
+
+    <!--Arrest No screen-->
+    <string name="pictures">Pictures</string>
+    <string name="remarks">Remarks</string>
+
+    <!--Filter Screen-->
+    <string name="name">Name</string>
+    <string name="personal_id_card">Personal ID Card</string>
+
+    <!--Extra-->
+    <string name="exception_msg">Opps! something went wrong.</string>
+    <string name="filter_by">Filter By</string>
+    <string name="empty_result_exception">Server Error: Opps! No Data found</string>
+    <string name="no_data_found">No Data Found</string>
+    <string name="signout_msg">Are you sure want to sign out?</string>
+    <string name="location_error">Opps! Enable to get location. Please check or turn on phone GPS services.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

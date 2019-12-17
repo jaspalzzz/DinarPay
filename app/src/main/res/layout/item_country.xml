@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="isCountryView"
+            type="Boolean" />
+        <variable
+            name="data"
+            type="com.ssas.tpcms.android.utils.countrycode.Country" />
+
+        <variable
+            name="callBack"
+            type="com.ssas.tpcms.android.ui.dialogs.CountryPickerDialog.CountrySelect" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:onClick="@{()->callBack.onCountryClick(data)}"
+            android:padding="@dimen/margin">
+
+            <ImageView
+                android:id="@+id/mImgFlag"
+                android:layout_width="@dimen/flag_icon_width"
+                android:layout_height="@dimen/flag_icon_height"
+                android:scaleType="fitXY"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:src_image="@{data}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_weight="1"
+                style="@style/CustomRegularTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin"
+                android:text="@{data.name}"
+                app:layout_constraintStart_toEndOf="@+id/mImgFlag"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="@{isCountryView?View.GONE:View.VISIBLE}"
+                style="@style/CustomRegularTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin"
+                android:text="@{data.phoneCode}"
+                >
+            </androidx.appcompat.widget.AppCompatTextView>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"></import>
+
+        <variable
+            name="backText"
+            type="Boolean" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+
+        <RelativeLayout
+            android:id="@+id/backViewBt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/backIconBt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/padding_x_small"
+                android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/CustomRegularDarkTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/backIconBt"
+                android:text="@string/back"
+                android:visibility="@{backText?View.VISIBLE:View.GONE}"
+                tools:visibility="gone">
+
+            </androidx.appcompat.widget.AppCompatTextView>
+        </RelativeLayout>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/toolbarTitle"
+            style="@style/CustomRegularDarkTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="" />
+
+        <!--android:background="?attr/selectableItemBackgroundBorderless"-->
+
+    </RelativeLayout>
+</layout>

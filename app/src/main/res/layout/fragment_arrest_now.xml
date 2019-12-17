@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="vm"
+            type="com.ssas.tpcms.android.repo.service.ServiceVM" />
+    </data>
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/padiding">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:onClick="@{()->vm.onCancelButtonClick()}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="@dimen/padding_small"
+                    android:src="@drawable/ic_cancel_black_24dp"></androidx.appcompat.widget.AppCompatImageView>
+
+                <ImageView
+                    android:layout_width="@dimen/upload_image_icon_width"
+                    android:layout_height="@dimen/upload_image_icon_height"
+                    android:layout_gravity="center"
+                    android:background="@drawable/fill_et_bg"></ImageView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/crime_name"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/crimnalNameEt"
+                    style="@style/EditRegularFillStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:hint="@string/type"></androidx.appcompat.widget.AppCompatEditText>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/location"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/LocationEt"
+                    style="@style/EditRegularFillStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:hint="@string/type"></androidx.appcompat.widget.AppCompatEditText>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/pictures">
+
+                </androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/picturesList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/remarks"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/remarksEt"
+                    style="@style/EditRegularFillStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:hint="@string/type"></androidx.appcompat.widget.AppCompatEditText>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/CustomPrimaryButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/submit">
+
+                </androidx.appcompat.widget.AppCompatButton>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </ScrollView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.ssas.tpcms.android.repo.service.ServiceVM" />
+
+        <variable
+            name="item"
+            type="com.ssas.tpcms.android.data.models.criminal_record.CrimnalProfileRecordModel" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/padiding">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/toolHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/CustomRegularDarkTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/crimnal_card"></androidx.appcompat.widget.AppCompatTextView>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->vm.onCancelButtonClick()}"
+                android:padding="@dimen/padding_small"
+                android:src="@drawable/ic_cancel_black_24dp">
+
+            </androidx.appcompat.widget.AppCompatImageView>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/crimnalNameText"
+                    style="@style/CustomSmallDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/crimnal_name"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/crimnalName"
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.firstnameEn}"
+                    app:layout_constraintTop_toBottomOf="@+id/crimnalNameText">
+
+                </androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/infoHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/crimnalName">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/userImage"
+                        android:layout_width="120dp"
+                        android:layout_height="150dp"
+                        android:background="@color/colorGray"
+                        base_image="@{item.profileImageList.get(0).image}"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatImageView>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/crimeText"
+                        style="@style/CustomSmallDarkTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin"
+                        android:text="@string/crime"
+                        app:layout_constraintLeft_toRightOf="@+id/userImage"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatTextView>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/crime"
+                        style="@style/CustomMediumDarkTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@{item.crimeName}"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/crimeText"
+                        app:layout_constraintTop_toBottomOf="@+id/crimeText">
+
+                    </androidx.appcompat.widget.AppCompatTextView>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/statusText"
+                        style="@style/CustomSmallDarkTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_large"
+                        android:text="@string/status"
+                        app:layout_constraintEnd_toStartOf="@+id/status"
+                        app:layout_constraintHorizontal_weight="40"
+                        app:layout_constraintStart_toStartOf="@+id/crimeText"
+                        app:layout_constraintTop_toBottomOf="@+id/crime"></androidx.appcompat.widget.AppCompatTextView>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/status"
+                        style="@style/CustomMediumDarkTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_small"
+                        android:text="@{item.crimianlStatusId}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="60"
+                        app:layout_constraintStart_toEndOf="@+id/statusText"
+                        app:layout_constraintTop_toTopOf="@+id/statusText">
+
+                    </androidx.appcompat.widget.AppCompatTextView>
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/wantedByText"
+                        style="@style/CustomSmallDarkTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/wanted_by"
+                        app:layout_constraintEnd_toStartOf="@+id/wantedBy"
+                        app:layout_constraintHorizontal_weight="40"
+                        app:layout_constraintStart_toStartOf="@+id/crimeText"
+                        app:layout_constraintTop_toBottomOf="@+id/status"></androidx.appcompat.widget.AppCompatTextView>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/wantedBy"
+                        style="@style/CustomMediumDarkTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_small"
+                        android:text="@{item.wantedBy}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="60"
+                        app:layout_constraintStart_toEndOf="@+id/wantedByText"
+                        app:layout_constraintTop_toTopOf="@+id/wantedByText"></androidx.appcompat.widget.AppCompatTextView>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/caseIdText"
+                        style="@style/CustomSmallDarkTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/case_id"
+                        app:layout_constraintEnd_toStartOf="@+id/caseId"
+                        app:layout_constraintHorizontal_weight="40"
+                        app:layout_constraintStart_toStartOf="@+id/crimeText"
+                        app:layout_constraintTop_toBottomOf="@+id/wantedBy"></androidx.appcompat.widget.AppCompatTextView>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/caseId"
+                        style="@style/CustomMediumDarkTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_small"
+                        android:text="@{item.caseId}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="60"
+                        app:layout_constraintStart_toEndOf="@+id/caseIdText"
+                        app:layout_constraintTop_toTopOf="@+id/caseIdText"></androidx.appcompat.widget.AppCompatTextView>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/flagedDateText"
+                        style="@style/CustomSmallDarkTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/flaged_date"
+                        app:layout_constraintEnd_toStartOf="@+id/flagedDate"
+                        app:layout_constraintHorizontal_weight="40"
+                        app:layout_constraintStart_toStartOf="@+id/crimeText"
+                        app:layout_constraintTop_toBottomOf="@+id/caseId"></androidx.appcompat.widget.AppCompatTextView>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/flagedDate"
+                        style="@style/CustomMediumDarkTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_small"
+                        android:text="@{item.flagedDate}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="60"
+                        app:layout_constraintStart_toEndOf="@+id/flagedDateText"
+                        app:layout_constraintTop_toTopOf="@+id/flagedDateText"></androidx.appcompat.widget.AppCompatTextView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/caseBriefText"
+                    style="@style/CustomSmallDarkTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/case_brief"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/infoHeader"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/caseBrief"
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.caseBriefDesc}"
+                    app:layout_constraintTop_toBottomOf="@+id/caseBriefText">
+
+                </androidx.appcompat.widget.AppCompatTextView>
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/CustomPrimaryButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:onClick="@{()->vm.onArrestNowClick()}"
+                    android:text="@string/report_arrest"
+                    app:layout_constraintTop_toBottomOf="@+id/caseBrief">
+
+                </androidx.appcompat.widget.AppCompatButton>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="item"
+            type="com.ssas.tpcms.android.data.models.UploadImageModel" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="@dimen/upload_image_icon_width"
+        android:layout_height="@dimen/upload_image_icon_height"
+        android:padding="@dimen/padding_small">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:scaleType="fitXY"
+            imageFileResource="@{item.path}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/fill_et_bg">
+
+        </androidx.appcompat.widget.AppCompatImageView>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:src="@drawable/ic_cancel_black_24dp"
+            android:id="@+id/deleteImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/padding_small">
+
+        </androidx.appcompat.widget.AppCompatImageView>
+    </RelativeLayout>
+</layout>

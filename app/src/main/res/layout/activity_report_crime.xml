@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.ssas.tpcms.android.repo.service.ServiceVM" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/custom_toolbar"
+            app:backText="@{true}"
+            app:layout_constraintTop_toTopOf="parent"></include>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:animateLayoutChanges="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padiding">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/crimeLocationText"
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/crime_location"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/getlocation"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/getlocation"
+                    style="@style/CustomSmallDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{()->vm.onGetLocationClick()}"
+                    android:padding="@dimen/padding_small"
+                    android:text="@string/get_location"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/crimeLocationEt"
+                    style="@style/EditRegularStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:hint="@string/location"
+                    android:imeOptions="actionNext"
+                    android:inputType="textMultiLine"
+                    android:text="@={vm.crimeLocation}"
+                    app:layout_constraintTop_toBottomOf="@+id/crimeLocationText"></androidx.appcompat.widget.AppCompatEditText>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/uploadImageText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/crimeLocationEt">
+
+                </androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/uploadImageList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/uploadImageText"></androidx.recyclerview.widget.RecyclerView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/crimeTypeText"
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:nestedScrollingEnabled="false"
+                    android:text="@string/crime_type"
+                    app:layout_constraintTop_toBottomOf="@+id/uploadImageList"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/crimeTypeEt"
+                    style="@style/EditRegularStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:focusable="false"
+                    android:hint="@string/choose"
+                    android:imeOptions="actionNext"
+                    android:inputType="none"
+                    android:onClick="@{()->vm.onCrimeTypeClick()}"
+                    android:text="@={vm.crimeType}"
+                    app:layout_constraintTop_toBottomOf="@+id/crimeTypeText"
+                    tools:layout_editor_absoluteX="16dp"></androidx.appcompat.widget.AppCompatEditText>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/suspectNameText"
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/suspect_name"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/crimeTypeEt"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/suspectNameEt"
+                    style="@style/EditRegularStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:hint="@string/type"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:text="@={vm.suspectNames}"
+                    app:layout_constraintTop_toBottomOf="@+id/suspectNameText"></androidx.appcompat.widget.AppCompatEditText>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/crimeBriefText"
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/crime_brief"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/suspectNameEt"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/crimeBriefEt"
+                    style="@style/EditRegularStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:gravity="start"
+                    android:hint="@string/type"
+                    android:imeOptions="actionNext"
+                    android:inputType="textMultiLine"
+                    android:maxLines="8"
+                    android:minLines="4"
+                    android:text="@={vm.crimeBrief}"
+                    app:layout_constraintTop_toBottomOf="@+id/crimeBriefText"></androidx.appcompat.widget.AppCompatEditText>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/crimeNameText"
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/crime_name"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/crimeBriefEt"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/crimeNameEt"
+                    style="@style/EditRegularStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:hint="@string/type"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:text="@={vm.crimeName}"
+                    app:layout_constraintTop_toBottomOf="@+id/crimeNameText"></androidx.appcompat.widget.AppCompatEditText>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/crimeSceneText"
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/crime_scene_text"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/crimeNameEt"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/crimeSceneEt"
+                    style="@style/EditRegularStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:hint="@string/type"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:text="@={vm.crimeScene}"
+                    app:layout_constraintTop_toBottomOf="@+id/crimeSceneText"></androidx.appcompat.widget.AppCompatEditText>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/nationalIdText"
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/national_id"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/crimeSceneEt"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/nationalIdEt"
+                    style="@style/EditRegularStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:hint="@string/type"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:text="@={vm.nationalId}"
+                    app:layout_constraintTop_toBottomOf="@+id/nationalIdText"></androidx.appcompat.widget.AppCompatEditText>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/passportNumberText"
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/passport_number"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/nationalIdEt"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/passportNumberEt"
+                    style="@style/EditRegularStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:hint="@string/type"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:text="@={vm.passportNumber}"
+                    app:layout_constraintTop_toBottomOf="@+id/passportNumberText"></androidx.appcompat.widget.AppCompatEditText>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/drivingLicenseNumberText"
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/driving_license_number"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/passportNumberEt"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/drivingLicensenumberEt"
+                    style="@style/EditRegularStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:hint="@string/type"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:text="@={vm.drivingLicence}"
+                    app:layout_constraintTop_toBottomOf="@+id/drivingLicenseNumberText"></androidx.appcompat.widget.AppCompatEditText>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mobileNumberLable"
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/contact_number"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/drivingLicensenumberEt" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/numberView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:background="@drawable/form_et_bg"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/mobileNumberLable">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/margin_small_extra"
+                        android:layout_weight="35"
+                        android:background="@drawable/secondary_button_bg"
+                        android:gravity="center"
+                        android:onClick="@{()-> vm.onCountryCodelick()}"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/mImgFlag"
+                            imageResource="@{vm.countryFlag}"
+                            android:layout_width="@dimen/flag_icon_width"
+                            android:layout_height="@dimen/flag_icon_height"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:scaleType="fitXY"></androidx.appcompat.widget.AppCompatImageView>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/countryCode"
+                            style="@style/CustomMediumDarkTextView"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/margin_small_extra"
+                            android:layout_weight="1"
+                            android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
+                            android:gravity="center"
+                            android:text="@={vm.countryCode}"></androidx.appcompat.widget.AppCompatTextView>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/mobileNumberEt"
+                        style="@style/EditRegularNoBgStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="65"
+                        android:hint="8888888888"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:text="@={vm.mobileNumber}" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mobileNumberError"
+                    style="@style/CustomRegularErrorTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="Enter name"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/numberView"
+                    tools:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/suspectAddressText"
+                    style="@style/CustomMediumDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/suspect_known_address"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mobileNumberError"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/suspectAddressEt"
+                    style="@style/EditRegularStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:gravity="start"
+                    android:hint="@string/type"
+                    android:imeOptions="actionDone"
+                    android:inputType="textMultiLine"
+                    android:maxLines="8"
+                    android:minLines="4"
+                    android:text="@={vm.suspectAddress}"
+                    app:layout_constraintTop_toBottomOf="@+id/suspectAddressText"></androidx.appcompat.widget.AppCompatEditText>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/CustomPrimaryButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:onClick="@{()->vm.onReportACrimeClick()}"
+                    android:text="@string/submit"
+                    app:layout_constraintTop_toBottomOf="@+id/suspectAddressEt">
+
+                </androidx.appcompat.widget.AppCompatButton>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="otp_et_width">50dp</dimen>
+    <dimen name="otp_et_height">80dp</dimen>
+
+    <!--padding-->
+    <dimen name="button_padding_lr">16dp</dimen>
+    <dimen name="button_padding_tb">8dp</dimen>
+    <dimen name="button_padding_frag">40dp</dimen>
+    <dimen name="padding_large">50dp</dimen>
+    <dimen name="padiding">16dp</dimen>
+    <dimen name="padding_medium">12dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_x_small">4dp</dimen>
+
+    <!--text size-->
+    <dimen name="form_text_size">10sp</dimen>
+    <dimen name="form_text_small_size">8dp</dimen>
+    <dimen name="default_very_small_text">10sp</dimen>
+    <dimen name="default_small_text">12sp</dimen>
+    <dimen name="default_medium_small_text">14sp</dimen>
+    <dimen name="default_text">16sp</dimen>
+    <dimen name="default_large_text">22sp</dimen>
+    <dimen name="default_extra_big_text">28sp</dimen>
+    <dimen name="default_card_text">20dp</dimen>
+
+
+    <!--redius-->
+    <dimen name="button_radius">5dp</dimen>
+    <dimen name="card_radius">8dp</dimen>
+    <dimen name="card_radius_small">4dp</dimen>
+    <dimen name="card_elevation">8dp</dimen>
+    <dimen name="bg_radius">24dp</dimen>
+
+    <!--elevation-->
+    <dimen name="evevation">5dp</dimen>
+    <dimen name="item_elevation">4dp</dimen>
+
+    <!--margins-->
+    <dimen name="margin_small_extra">5dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin">16dp</dimen>
+    <dimen name="margin_large">18dp</dimen>
+    <dimen name="margin_big">22dp</dimen>
+    <dimen name="margin_x_large">32dp</dimen>
+    <dimen name="margin_large_space">50dp</dimen>
+    <dimen name="margin_x_large_negative">-42dp</dimen>
+    <dimen name="stepper_progress_margin">48dp</dimen>
+    <dimen name="status_bar_height">24dp</dimen>
+
+    <!--flag dialog-->
+    <dimen name="flag_icon_width">32dp</dimen>
+    <dimen name="flag_icon_height">20dp</dimen>
+
+    <!--Extra-->
+    <dimen name="upload_image_icon_width">120dp</dimen>
+    <dimen name="upload_image_icon_height">140dp</dimen>
+
+</resources>

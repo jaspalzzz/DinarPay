@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/round_corner_white_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:padding="@dimen/padding_x_small"
+            android:layout_centerVertical="true"
+            android:id="@+id/backIconBt"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_centerVertical="true"
+            android:text=""
+            android:id="@+id/toolbarTitle"
+            android:layout_marginRight="@dimen/margin"
+            android:layout_marginLeft="@dimen/margin"
+            android:gravity="center"
+            android:layout_gravity="center"
+            style="@style/CustomLargeDarkTextView"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/txt_search"
+        style="@style/CustomRegularTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:background="@drawable/form_et_bg"
+        android:hint="@string/search"
+        android:imeOptions="actionDone|flagNoFullscreen"
+        android:inputType="text"
+        android:maxLines="1"
+        android:padding="@dimen/padding_medium"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="@dimen/margin"
+        android:id="@+id/mRvCountry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fadeScrollbars="true"
+        android:scrollbarFadeDuration="500" />
+
+    <TextView
+        android:id="@+id/mTvNoResult"
+        style="@style/CustomRegularTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/padiding"
+        android:text="No Result"
+        android:textSize="@dimen/default_large_text"
+        android:visibility="gone" />
+</LinearLayout>
+</layout>
