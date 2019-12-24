@@ -6,16 +6,13 @@
         <variable
             name="vm"
             type="com.ssas.tpcms.android.repo.home.HomeVM" />
-
-        <variable
-            name="item"
-            type="com.ssas.tpcms.android.data.models.auth.OfficersProfileResponseModel" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/top_corner_primary_bg"
         android:orientation="vertical"
         android:padding="@dimen/padiding">
 
@@ -24,391 +21,73 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/CustomRegularDarkTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/profile_card"></androidx.appcompat.widget.AppCompatTextView>
-
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:onClick="@{()->vm.onCancleClick()}"
                 android:padding="@dimen/padding_small"
                 android:src="@drawable/ic_cancel_black_24dp">
 
             </androidx.appcompat.widget.AppCompatImageView>
 
+            <RadioGroup
+                android:layout_marginTop="@dimen/margin_small"
+                android:id="@+id/genderToggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/switch_bg"
+                android:checkedButton="@+id/profileBt"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/profileBt"
+                    style="@style/CustomRegularTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/switch_toggle_bg"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:onClick="@{()->vm.onMyProfileTabClick()}"
+                    android:padding="@dimen/padding_medium"
+                    android:text="@string/myProfile"
+                    android:textColor="@drawable/switch_text_selector" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/missionBt"
+                    style="@style/CustomRegularTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/switch_toggle_bg"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:onClick="@{()->vm.onMissionTabClick()}"
+                    android:padding="@dimen/padding_medium"
+                    android:text="@string/mission_card"
+                    android:textColor="@drawable/switch_text_selector" />
+            </RadioGroup>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <ScrollView
+        <fragment
+            android:id="@+id/profile_nav_naviagtion"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/officerText"
-                    style="@style/CustomSmallDarkTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin"
-                    android:text="@string/detected_officer"
-                    app:layout_constraintEnd_toStartOf="@+id/idNumberText"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatTextView>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/idNumberText"
-                    style="@style/CustomSmallDarkTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:text="@string/user_id_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toEndOf="@+id/officerText"
-                    app:layout_constraintTop_toTopOf="@id/officerText"></androidx.appcompat.widget.AppCompatTextView>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/officer"
-                    style="@style/CustomMediumDarkTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:text="@{item.officerFirstnameEn}"
-                    app:layout_constraintEnd_toEndOf="@id/officerText"
-                    app:layout_constraintStart_toStartOf="@+id/officerText"
-                    app:layout_constraintTop_toBottomOf="@+id/officerText">
-
-                </androidx.appcompat.widget.AppCompatTextView>
-
-                <androidx.appcompat.widget.AppCompatTextView
-
-                    android:id="@+id/idNumber"
-                    style="@style/CustomMediumDarkTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:text="@{item.validUserID}"
-                    app:layout_constraintEnd_toEndOf="@id/idNumberText"
-                    app:layout_constraintStart_toStartOf="@+id/idNumberText"
-                    app:layout_constraintTop_toBottomOf="@+id/idNumberText">
-
-                </androidx.appcompat.widget.AppCompatTextView>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/dobText"
-                    style="@style/CustomSmallDarkTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin"
-                    android:text="@string/dateofbirth"
-                    app:layout_constraintStart_toStartOf="@+id/idNumber"
-                    app:layout_constraintTop_toBottomOf="@+id/idNumber"></androidx.appcompat.widget.AppCompatTextView>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/dob"
-                    style="@style/CustomMediumDarkTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_small"
-                    android:text="@{item.dateOfBirth}"
-                    app:layout_constraintLeft_toRightOf="@+id/dobText"
-                    app:layout_constraintTop_toTopOf="@+id/dobText">
-
-                </androidx.appcompat.widget.AppCompatTextView>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/infoHeader"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dob">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/changeDpBt"
-                        style="@style/CustomSmallDarkTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/padiding"
-                        android:paddingTop="@dimen/padding_small"
-                        android:paddingBottom="@dimen/padding_small"
-                        android:text="change"
-                        app:layout_constraintEnd_toEndOf="@+id/userImage"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                    </androidx.appcompat.widget.AppCompatTextView>
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        base_image="@{item.profilePhoto1}"
-                        android:id="@+id/userImage"
-                        android:layout_width="120dp"
-                        android:layout_height="150dp"
-                        android:scaleType="fitXY"
-                        android:background="@color/colorGray"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/changeDpBt"></androidx.appcompat.widget.AppCompatImageView>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/CommandCenterText"
-                        style="@style/CustomSmallDarkTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin"
-                        android:text="@string/command_center"
-                        app:layout_constraintLeft_toRightOf="@+id/userImage"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/userImage"></androidx.appcompat.widget.AppCompatTextView>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/commandCenter"
-                        style="@style/CustomMediumDarkTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@{item.contactAddress}"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/CommandCenterText"
-                        app:layout_constraintTop_toBottomOf="@+id/CommandCenterText">
-
-                    </androidx.appcompat.widget.AppCompatTextView>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/phoneNumberText"
-                        style="@style/CustomSmallDarkTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_large"
-                        android:text="@string/mobile"
-                        app:layout_constraintEnd_toStartOf="@+id/phoneNumber"
-                        app:layout_constraintHorizontal_weight="40"
-                        app:layout_constraintStart_toStartOf="@+id/CommandCenterText"
-                        app:layout_constraintTop_toBottomOf="@+id/commandCenter"></androidx.appcompat.widget.AppCompatTextView>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/phoneNumber"
-                        style="@style/CustomMediumDarkTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_small"
-                        android:text="@{item.mobileNumber}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_weight="60"
-                        app:layout_constraintStart_toEndOf="@+id/phoneNumberText"
-                        app:layout_constraintTop_toTopOf="@+id/phoneNumberText">
-
-                    </androidx.appcompat.widget.AppCompatTextView>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/rankText"
-                        style="@style/CustomSmallDarkTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/rank"
-                        app:layout_constraintEnd_toStartOf="@+id/rank"
-                        app:layout_constraintHorizontal_weight="40"
-                        app:layout_constraintStart_toStartOf="@+id/CommandCenterText"
-                        app:layout_constraintTop_toBottomOf="@+id/phoneNumber"></androidx.appcompat.widget.AppCompatTextView>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/rank"
-                        style="@style/CustomMediumDarkTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_small"
-                        android:text="@{item.officersRank}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_weight="60"
-                        app:layout_constraintStart_toEndOf="@+id/rankText"
-                        app:layout_constraintTop_toTopOf="@+id/rankText">
-
-                    </androidx.appcompat.widget.AppCompatTextView>
-
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/unitText"
-                        style="@style/CustomSmallDarkTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/unit"
-                        app:layout_constraintEnd_toStartOf="@+id/unit"
-                        app:layout_constraintHorizontal_weight="40"
-                        app:layout_constraintStart_toStartOf="@+id/CommandCenterText"
-                        app:layout_constraintTop_toBottomOf="@+id/rank"></androidx.appcompat.widget.AppCompatTextView>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/unit"
-                        style="@style/CustomMediumDarkTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_small"
-                        android:text="@{item.reportingUnit}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_weight="60"
-                        app:layout_constraintStart_toEndOf="@+id/unitText"
-                        app:layout_constraintTop_toTopOf="@+id/unitText"></androidx.appcompat.widget.AppCompatTextView>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/officerIdText"
-                        style="@style/CustomSmallDarkTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/officer_id"
-                        app:layout_constraintEnd_toStartOf="@+id/officerId"
-                        app:layout_constraintHorizontal_weight="40"
-                        app:layout_constraintStart_toStartOf="@+id/CommandCenterText"
-                        app:layout_constraintTop_toBottomOf="@+id/unit"></androidx.appcompat.widget.AppCompatTextView>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/officerId"
-                        style="@style/CustomMediumDarkTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_small"
-                        android:text="@{item.validUserID}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_weight="60"
-                        app:layout_constraintStart_toEndOf="@+id/officerIdText"
-                        app:layout_constraintTop_toTopOf="@+id/officerIdText"></androidx.appcompat.widget.AppCompatTextView>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/expireDateText"
-                        style="@style/CustomSmallDarkTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/expiry_date"
-                        app:layout_constraintEnd_toStartOf="@+id/expireDate"
-                        app:layout_constraintHorizontal_weight="40"
-                        app:layout_constraintStart_toStartOf="@+id/CommandCenterText"
-                        app:layout_constraintTop_toBottomOf="@+id/officerId"></androidx.appcompat.widget.AppCompatTextView>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/expireDate"
-                        style="@style/CustomMediumDarkTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_small"
-                        android:text="@{item.expiryDate}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_weight="60"
-                        app:layout_constraintStart_toEndOf="@+id/expireDateText"
-                        app:layout_constraintTop_toTopOf="@+id/expireDateText"></androidx.appcompat.widget.AppCompatTextView>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/weaponPermissionText"
-                    style="@style/CustomSmallDarkTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin"
-                    android:text="@string/permission_weapon"
-                    app:layout_constraintEnd_toStartOf="@+id/weaponPermission"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/infoHeader">
-
-                </androidx.appcompat.widget.AppCompatTextView>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/weaponPermission"
-                    style="@style/CustomMediumDarkTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:text="@{item.permissionToCarryWeapon}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toEndOf="@+id/weaponPermissionText"
-                    app:layout_constraintTop_toTopOf="@+id/weaponPermissionText">
-
-                </androidx.appcompat.widget.AppCompatTextView>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/weaponTypeText"
-                    style="@style/CustomSmallDarkTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/weapon_type"
-                    app:layout_constraintEnd_toStartOf="@+id/weaponType"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/weaponPermission">
-
-                </androidx.appcompat.widget.AppCompatTextView>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/weaponType"
-                    style="@style/CustomMediumDarkTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:text="@{item.allowedWeaponType}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toEndOf="@+id/weaponTypeText"
-                    app:layout_constraintTop_toTopOf="@+id/weaponTypeText">
-
-                </androidx.appcompat.widget.AppCompatTextView>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/weaponNumberText"
-                    style="@style/CustomSmallDarkTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/weapon_number"
-                    app:layout_constraintEnd_toStartOf="@+id/weaponNumber"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/weaponType">
-
-                </androidx.appcompat.widget.AppCompatTextView>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/weaponNumber"
-                    style="@style/CustomMediumDarkTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:text="@{item.weaponSerialNumber}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toEndOf="@+id/weaponNumberText"
-                    app:layout_constraintTop_toTopOf="@+id/weaponNumberText">
-
-                </androidx.appcompat.widget.AppCompatTextView>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    generate_qrCode="@{item.officerCode}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:layout_marginBottom="@dimen/margin_large"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/weaponNumber">
-
-                </androidx.appcompat.widget.AppCompatImageView>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+            android:layout_height="match_parent"
+            app:navGraph="@navigation/nav_profile_graph" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

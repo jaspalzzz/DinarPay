@@ -14,7 +14,7 @@
             type="com.ssas.tpcms.android.repo.auth.AuthVM" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,31 +23,61 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:scrollbars="none">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/appLogoCard"
+                    android:layout_width="@dimen/auth_app_logo_width"
+                    android:layout_height="@dimen/auth_app_logo_height"
+                    android:layout_marginTop="@dimen/margin_x_large"
+                    android:elevation="@dimen/evevation"
+                    app:cardCornerRadius="@dimen/auth_app_logo_radius"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/appLogo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/margin_small_extra"
+                        android:src="@drawable/app_logo">
+
+                    </de.hdodenhof.circleimageview.CircleImageView>
+
+                </androidx.cardview.widget.CardView>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/userIdText"
                     style="@style/CustomRegularDarkTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_large_space"
+                    android:layout_margin="@dimen/margin_x_large"
                     android:text="@string/user_id_text"
-                    app:layout_constraintStart_toStartOf="@+id/userIDView"
-                    app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatTextView>
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/appLogoCard"></androidx.appcompat.widget.AppCompatTextView>
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <LinearLayout
                     android:id="@+id/userIDView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/margin_small"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/userIdText">
 
                     <androidx.appcompat.widget.AppCompatEditText
@@ -58,33 +88,39 @@
                         android:gravity="center"
                         android:inputType="number"
                         android:maxLength="1"
-                        android:text="@={vm.userIdFirstDigit}" />
+                        android:text="@={vm.userIdFirstDigit}"
+                        />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/secondDigitet"
                         style="@style/EditOTPStyle"
+                        android:layout_marginStart="@dimen/margin"
                         android:layout_marginLeft="@dimen/margin"
                         android:afterTextChanged="@{vm::afterUserIdSecondTextChanged}"
                         android:cursorVisible="false"
                         android:gravity="center"
                         android:inputType="number"
                         android:maxLength="1"
-                        android:text="@={vm.userIdSecondDigit}" />
+                        android:text="@={vm.userIdSecondDigit}"
+                        />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/thirdDigitet"
                         style="@style/EditOTPStyle"
+                        android:layout_marginStart="@dimen/margin"
                         android:layout_marginLeft="@dimen/margin"
                         android:afterTextChanged="@{vm::afterUserIdThirdTextChanged}"
                         android:cursorVisible="false"
                         android:gravity="center"
                         android:inputType="number"
                         android:maxLength="1"
-                        android:text="@={vm.userIdThirdDigit}" />
+                        android:text="@={vm.userIdThirdDigit}"
+                         />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/fourthDigitet"
                         style="@style/EditOTPStyle"
+                        android:layout_marginStart="@dimen/margin"
                         android:layout_marginLeft="@dimen/margin"
                         android:afterTextChanged="@{vm::afterUserIdFourthTextChanged}"
                         android:cursorVisible="false"
@@ -92,11 +128,13 @@
                         android:imeOptions="actionDone"
                         android:inputType="number"
                         android:maxLength="1"
-                        android:text="@={vm.userIdFourthDigit}" />
+                        android:text="@={vm.userIdFourthDigit}"
+                        />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/fifthDigitet"
                         style="@style/EditOTPStyle"
+                        android:layout_marginStart="@dimen/margin"
                         android:layout_marginLeft="@dimen/margin"
                         android:afterTextChanged="@{vm::afterUserIdFifthTextChanged}"
                         android:cursorVisible="false"
@@ -104,25 +142,58 @@
                         android:imeOptions="actionDone"
                         android:inputType="number"
                         android:maxLength="1"
-                        android:text="@={vm.userIdFiveDigit}" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                        android:text="@={vm.userIdFiveDigit}"
+                         />
+                </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/registerButton4"
                     style="@style/CustomButton"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin"
                     android:layout_marginTop="@dimen/margin_x_large"
                     android:enabled="@{enableButton}"
                     android:onClick="@{()->vm.onUserIdVerifyClick()}"
                     android:text="@string/verify_now"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/userIDView"
+                    app:layout_constraintWidth_percent=".6" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_corner_primary_bg"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/padiding"
+                    android:paddingTop="@dimen/margin_x_large"
+                    android:paddingRight="@dimen/padiding"
+                    android:paddingBottom="@dimen/margin_x_large"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_marginEnd="@dimen/margin"
+                        android:layout_marginRight="@dimen/margin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/face_id">
+
+                    </androidx.appcompat.widget.AppCompatImageView>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/CustomRegularPrimaryTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin"
+                        android:layout_marginEnd="@dimen/margin"
+                        android:text="@string/login_faceId">
+
+                    </androidx.appcompat.widget.AppCompatTextView>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
-    </LinearLayout>
-
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

@@ -4,12 +4,14 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
+        android:background="@drawable/theme_img"
         android:layout_height="match_parent"
+        android:paddingTop="@dimen/status_bar_height"
         tools:context=".ui.auth.LoginActivity">
 
         <include
             android:id="@+id/toolbar"
-            layout="@layout/custom_toolbar"
+            layout="@layout/custom_toolbar_light"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"

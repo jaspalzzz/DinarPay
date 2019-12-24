@@ -1,92 +1,137 @@
-<androidx.appcompat.widget.LinearLayoutCompat android:id="@+id/bottom_sheet"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardElevation="@dimen/evevation"
-    app:behavior_hideable="false"
-    app:behavior_peekHeight="?attr/actionBarSize"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <LinearLayout
-        android:background="@drawable/top_corner_primary_bg"
-        android:padding="@dimen/padiding"
-        android:orientation="vertical"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/bottomsheetLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/CustomRegularDarkTextView"
+        android:layout_height="wrap_content"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="?attr/actionBarSize"
+        app:cardElevation="@dimen/evevation"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
-            android:paddingLeft="@dimen/margin_small"
-            android:paddingRight="@dimen/margin_small"
-            android:paddingBottom="@dimen/margin_small"
-            android:text="@string/filter_by" />
+            android:background="@drawable/top_corner_primary_bg"
+            android:orientation="vertical"
+            android:padding="@dimen/padiding">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/CustomMediumDarkTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:text="@string/name"></androidx.appcompat.widget.AppCompatTextView>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/nameEt"
-            style="@style/EditRegularFillStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:imeOptions="actionNext"
-            android:inputType="text"></androidx.appcompat.widget.AppCompatEditText>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/filterBt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/fill_et_small_redius_bg"
+                    android:padding="@dimen/padding_small"
+                    android:src="@drawable/ic_filter"></androidx.appcompat.widget.AppCompatImageView>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/CustomMediumDarkTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:text="@string/national_id"></androidx.appcompat.widget.AppCompatTextView>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_toEndOf="@+id/filterBt"
+                    android:layout_centerVertical="true"
+                    android:text="@string/filter_by"
+                    style="@style/CustomRegularDarkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/filterBt"
+                    android:layout_marginLeft="@dimen/margin">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/nationalIdEt"
-            style="@style/EditRegularFillStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:imeOptions="actionNext"
-            android:inputType="text"></androidx.appcompat.widget.AppCompatEditText>
+                </androidx.appcompat.widget.AppCompatTextView>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/CustomMediumDarkTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:text="@string/personal_id_card"></androidx.appcompat.widget.AppCompatTextView>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/clearFilter"
+                    android:text="@string/clear_filter"
+                    android:layout_centerVertical="true"
+                    android:paddingBottom="@dimen/padding_small"
+                    android:paddingTop="@dimen/padding_small"
+                    android:paddingRight="@dimen/padiding"
+                    android:layout_alignParentEnd="true"
+                    style="@style/CustomRegularTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true">
+                </androidx.appcompat.widget.AppCompatTextView>
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/PersonalCardEt"
-            style="@style/EditRegularFillStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:imeOptions="actionNext"
-            android:inputType="text"></androidx.appcompat.widget.AppCompatEditText>
+            </RelativeLayout>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/CustomMediumDarkTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:text="@string/passport_number"></androidx.appcompat.widget.AppCompatTextView>
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/CustomMediumDarkTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:text="@string/name"></androidx.appcompat.widget.AppCompatTextView>
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/passportNumberEt"
-            style="@style/EditRegularFillStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:imeOptions="actionGo"
-            android:inputType="text"></androidx.appcompat.widget.AppCompatEditText>
-    </LinearLayout>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/nameEt"
+                style="@style/EditRegularFillStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:imeOptions="actionNext"
+                android:inputType="text"></androidx.appcompat.widget.AppCompatEditText>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/CustomMediumDarkTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:text="@string/national_id"></androidx.appcompat.widget.AppCompatTextView>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/nationalIdEt"
+                style="@style/EditRegularFillStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:imeOptions="actionNext"
+                android:inputType="text"></androidx.appcompat.widget.AppCompatEditText>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/CustomMediumDarkTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:text="@string/personal_id_card"></androidx.appcompat.widget.AppCompatTextView>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/PersonalCardEt"
+                style="@style/EditRegularFillStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:imeOptions="actionNext"
+                android:inputType="text"></androidx.appcompat.widget.AppCompatEditText>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/CustomMediumDarkTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:text="@string/passport_number"></androidx.appcompat.widget.AppCompatTextView>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/filterPassportNumberEt"
+                style="@style/EditRegularFillStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:imeOptions="actionGo"
+                android:inputType="text"></androidx.appcompat.widget.AppCompatEditText>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filterSubmitButton"
+                style="@style/CustomPrimaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:text="@string/submit"></androidx.appcompat.widget.AppCompatButton>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

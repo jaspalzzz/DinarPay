@@ -2,7 +2,6 @@ package com.ssas.tpcms.android.repo.service
 
 import android.app.Application
 import android.text.TextUtils
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -112,6 +111,10 @@ class ServiceVM(application: Application) : AndroidViewModel(application) {
         set("")
     }
 
+    var remarks = ObservableField<String>().apply {
+        set("")
+    }
+
     /***
      * Report crime error variables
      */
@@ -164,7 +167,11 @@ class ServiceVM(application: Application) : AndroidViewModel(application) {
     fun getCrimeReports(
         officerCode: String,
         pageNumber: Int,
-        pageLimit: Int
+        pageLimit: Int,
+        crimeName: String,
+        crimeLocation: String,
+        crimeType: String,
+        crimeCity: String
     ) {
         if (Utils.isInternet(getApplication())) {
             var obj = SoapObject(Connections.NAMESPACE, "viewCrimeReportRequestVO")
@@ -176,6 +183,10 @@ class ServiceVM(application: Application) : AndroidViewModel(application) {
             obj.addProperty("limit", pageLimit)
             obj.addProperty("pageNumber", pageNumber)
             obj.addProperty("crimeReportSeeAll", "Y")
+            obj.addProperty("crimeName_En", crimeName)
+            obj.addProperty("crimeLocation", crimeLocation)
+            obj.addProperty("typeOfCrime", crimeType)
+            obj.addProperty("cityName", crimeCity)
 
             repo.getCrimeReports(obj)
                 .subscribeOn(Schedulers.io())
@@ -210,7 +221,11 @@ class ServiceVM(application: Application) : AndroidViewModel(application) {
     fun getCriminalProfileRecords(
         officerCode: String,
         pageNumber: Int,
-        pageLimit: Int
+        pageLimit: Int,
+        name: String,
+        nationalId: String,
+        personalId: String,
+        passportNumber: String
     ) {
         if (Utils.isInternet(getApplication())) {
             var obj = SoapObject(Connections.NAMESPACE, "viewCriminalProfileRequestVO")
@@ -222,6 +237,10 @@ class ServiceVM(application: Application) : AndroidViewModel(application) {
             obj.addProperty("limit", pageLimit)
             obj.addProperty("pageNumber", pageNumber)
             obj.addProperty("criminalsProfileSeeAll", "Y")
+            obj.addProperty("firstName_En", name)
+            obj.addProperty("nationalIdNumber", nationalId)
+            obj.addProperty("persoanlIdNumber", personalId)
+            obj.addProperty("passportNumber", passportNumber)
 
             repo.getCriminalRecord(obj)
                 .subscribeOn(Schedulers.io())
@@ -269,11 +288,12 @@ class ServiceVM(application: Application) : AndroidViewModel(application) {
     }
 
     fun reportACrime(uploadImageList: ArrayList<UploadImageModel>, officerCode: String) {
-        if (!isValidReporCrimeParms()) {
-            return
-        }
-
         if (Utils.isInternet(getApplication())) {
+
+            if (!isValidReporCrimeParms()) {
+                return
+            }
+
             var obj = SoapObject(Connections.NAMESPACE, "crimeReportRequestVO")
             obj.addProperty("mobileAppDeviceId", prefMain[PrefKeys.DEVICE_ID, ""])
             obj.addProperty("mobileAppPassword", Connections.MOBILE_APP_PASSWORD)
@@ -363,4 +383,61 @@ class ServiceVM(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    var arrestNowResponse = MutableLiveData<APIResponse<CommonResponse>>()
+    fun arrestNow(
+        uploadImageList: ArrayList<UploadImageModel>,
+        officerCode: String,
+        criminalId: String
+    ) {
+        if (Utils.isInternet(getApplication())) {
+
+            if (TextUtils.isEmpty(crimeLocation.get().toString().trim())) {
+                crimeLocationError.value = R.string.crime_location_error
+                return
+            }
+
+            var obj = SoapObject(Connections.NAMESPACE, "arrestCriminalsNowRequestVO")
+            obj.addProperty("mobileAppDeviceId", prefMain[PrefKeys.DEVICE_ID, ""])
+            obj.addProperty("mobileAppPassword", Connections.MOBILE_APP_PASSWORD)
+            obj.addProperty("mobileAppSmartSecurityKey", Connections.MOBILE_APP_SMART_SECURITY_KEY)
+            obj.addProperty("mobileAppUserName", Connections.MOBILE_APP_USER_NAME)
+            obj.addProperty("loginOfficersCode", officerCode)
+            obj.addProperty("criminalsId", criminalId)
+            obj.addProperty("arrestLocation", crimeLocation.get().toString().trim())
+            obj.addProperty("arrestRemarks", remarks.get().toString().trim())
+            if (uploadImageList.isNotEmpty()) {
+                if (uploadImageList.size > 0) {
+                    for (i in 0 until uploadImageList.size) {
+                        if (!uploadImageList[i].path.isEmpty() && uploadImageList[i].type == 1) {
+                            obj.addProperty(
+                                "arrestPhoto$i",
+                                Utils.generateBase64Image(uploadImageList[i].path)
+                            )
+                        }
+                    }
+                }
+            }
+            repo.arrestNow(obj)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : SingleObserver<CommonResponse> {
+                    override fun onSuccess(t: CommonResponse) {
+                        arrestNowResponse.value =
+                            APIResponse<CommonResponse>().onSuccess(t) as APIResponse<CommonResponse>
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                        arrestNowResponse.value =
+                            APIResponse<CommonResponse>().onLoading() as APIResponse<CommonResponse>
+                    }
+
+                    override fun onError(e: Throwable) {
+                        arrestNowResponse.value =
+                            APIResponse<CommonResponse>().onError(e) as APIResponse<CommonResponse>
+                    }
+                })
+        } else {
+            networkError.value = true
+        }
+    }
 }

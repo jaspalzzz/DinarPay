@@ -2,9 +2,13 @@ package com.ssas.tpcms.android.ui.service.crime_database
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
+import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.gson.Gson
 import com.ssas.dinarpay.android.network.Status
 import com.ssas.tpcms.android.R
@@ -17,6 +21,9 @@ import com.ssas.tpcms.android.ui.ConstantKeys
 import com.ssas.tpcms.android.ui.service.adapter.CriminalDbAdapter
 import com.ssas.tpcms.android.utils.Utils
 import com.ssas.tpcms.android.widgets.GridSpacingItemDecoration
+import kotlinx.android.synthetic.main.activity_report_crime.view.*
+import kotlinx.android.synthetic.main.criminal_list_filter_layout.view.*
+import kotlinx.android.synthetic.main.criminal_list_filter_layout.view.nationalIdEt
 
 class CriminalDatabaseActivity : BaseActivity<ActivityCriminalDatabaseBinding, ServiceVM>(),
     ItemClickListener {
@@ -28,6 +35,18 @@ class CriminalDatabaseActivity : BaseActivity<ActivityCriminalDatabaseBinding, S
     private var loading = true
     private var isScrolling = false
 
+    /***
+     * Filter parameters
+     */
+    private var name: String = ""
+    private var nationalId: String = ""
+    private var personalId: String = ""
+    private var passportNumber: String = ""
+
+    /***
+     * handle bottom sheet behaviour
+     */
+    private var bottomSheetBehavior: BottomSheetBehavior<*>? = null
 
     override val bindingActivity: ActivityBinding
         get() = ActivityBinding(R.layout.activity_criminal_database, ServiceVM::class.java)
@@ -37,11 +56,48 @@ class CriminalDatabaseActivity : BaseActivity<ActivityCriminalDatabaseBinding, S
         initToolbar()
         inflaterServiceList()
         fetchCriminalRecords()
+        handleFilterSubmit()
         swipeRefesh()
     }
 
     private fun fetchCriminalRecords() {
-        viewModel.getCriminalProfileRecords(officerCode?:"", pageNumber, limit)
+        viewModel.getCriminalProfileRecords(
+            officerCode ?: "",
+            pageNumber,
+            limit,
+            name,
+            nationalId,
+            personalId,
+            passportNumber
+        )
+    }
+
+    private fun handleFilterSubmit() {
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.filterView.bottomsheetLinearLayout)
+        binding.filterView.filterSubmitButton.setOnClickListener {
+            name = binding.filterView.nameEt.text.toString().trim()
+            nationalId = binding.filterView.nationalIdEt.text.toString().trim()
+            personalId = binding.filterView.PersonalCardEt.text.toString().trim()
+            passportNumber = binding.filterView.filterPassportNumberEt.text.toString().trim()
+            if (isVailidFiltertaion()) {
+                clearOldData()
+                fetchCriminalRecords()
+            }
+            handleBottomSheetBehaviour()
+        }
+
+        binding.filterView.clearFilter.setOnClickListener {
+            startRefreshingData()
+        }
+    }
+
+    private fun isVailidFiltertaion(): Boolean {
+        return !(name.isEmpty() and nationalId.isEmpty() and personalId.isEmpty() and passportNumber.isEmpty())
+    }
+
+    private fun handleBottomSheetBehaviour() {
+        bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
+        clearFilterData()
     }
 
     private fun handleIntent(intent: Intent?) {
@@ -106,14 +162,23 @@ class CriminalDatabaseActivity : BaseActivity<ActivityCriminalDatabaseBinding, S
     }
 
     override fun onItemClick(adapter: Any?, position: Int) {
-        var criminalData:CrimnalProfileRecordModel = criminalDbAdapter.getItem(position)
+        var criminalData: CrimnalProfileRecordModel = criminalDbAdapter.getItem(position)
         var criminalDataSerial = Gson().toJson(criminalData)
-        var crimnalCardDialog = CrimnalCardFragment.newInstance(criminalDataSerial)
+        var crimnalCardDialog = CrimnalCardFragment.newInstance(criminalDataSerial,officerCode?:"")
         crimnalCardDialog.show(supportFragmentManager, crimnalCardDialog.tag)
 
     }
 
     override fun subscribeToEvents(vm: ServiceVM) {
+
+        vm.networkError.observe(this, Observer {
+            if(it){
+                emptyDataLayout()
+                stopRefeshingData()
+                alertDialogShow(this,getString(R.string.no_network_title),getString(R.string.no_network_connection))
+            }
+        })
+
         vm.crimnalProfileListResponse.observe(this, Observer {
             when (it?.status) {
                 Status.LOADING -> {
@@ -123,10 +188,12 @@ class CriminalDatabaseActivity : BaseActivity<ActivityCriminalDatabaseBinding, S
                     dismissProgress()
                     stopRefeshingData()
                     if (it?.response.status?.responseCode == "OPS10005" && it?.response.status?.responseMsg.equals(
-                            "Success",false
+                            "Success", false
                         )
                     ) {
                         addCriminalProfileData(it?.response.profileList)
+                    } else if(it?.response.status?.responseCode == "OPE10007" && it?.response?.status?.responseMsg.equals("Failure")){
+                        emptyDataLayout()
                     } else {
                         emptyDataLayout()
                         alertDialogShow(
@@ -166,10 +233,22 @@ class CriminalDatabaseActivity : BaseActivity<ActivityCriminalDatabaseBinding, S
     }
 
     private fun startRefreshingData() {
+        clearOldData()
+        clearFilterData()
+        fetchCriminalRecords()
+    }
+
+    private fun clearOldData() {
         criminalDbAdapter.clearData()
         isScrolling = false
         pageNumber = 0
-        fetchCriminalRecords()
+    }
+
+    private fun clearFilterData() {
+        name = ""
+        nationalId = ""
+        personalId = ""
+        passportNumber = ""
     }
 
     private fun stopRefeshingData() {

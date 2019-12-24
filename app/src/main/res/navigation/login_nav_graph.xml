@@ -6,7 +6,12 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.ssas.tpcms.android.ui.auth.LoginFragment"
-        android:label="LoginFragment" />
+        android:label="LoginFragment" >
+        <action
+            app:popUpTo="@+id/loginFragment"
+            android:id="@+id/action_loginFragment_to_loginUserIdFragment"
+            app:destination="@id/loginUserIdFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginUserIdFragment"
         android:name="com.ssas.tpcms.android.ui.auth.LoginUserIdFragment"

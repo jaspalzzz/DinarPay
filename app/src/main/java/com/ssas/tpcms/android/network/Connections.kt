@@ -24,15 +24,16 @@ object Connections {
      * SOAP Methods
      * Dinarpay customer AUTH end points
      */
-    val OFFICER_LOGIN_METHOD = "officersSignIn"
-    val CRIMNAL_PROFILE_METHODE = "getCriminalsProfile"
-    val CRIME_REPORTS_METHODE = "getCrimeReports"
-    val OFFICER_QR_CODE_METHOD = "getOfficersProfileByQRCard"
-    val PROCESS_QR_CODE_SCANNING = "processQRCodeScanningRequest"
-    val REPORT_A_CRIME_METHOD = "createCrimeReport"
-    val CRIME_TYPES_METHOD = "getCrimeTypesMapping"
-    val GET_NOTIFICATION_METHOD = "getNotifications"
-    val CREATE_SOS_METHOD = "createSOSRequest"
+    const val OFFICER_LOGIN_METHOD = "officersSignIn"
+    const val CRIMNAL_PROFILE_METHODE = "getCriminalsProfile"
+    const val CRIME_REPORTS_METHODE = "getCrimeReports"
+    const val OFFICER_QR_CODE_METHOD = "getOfficersProfileByQRCard"
+    const val PROCESS_QR_CODE_SCANNING = "processQRCodeScanningRequest"
+    const val REPORT_A_CRIME_METHOD = "createCrimeReport"
+    const val CRIME_TYPES_METHOD = "getCrimeTypesMapping"
+    const val GET_NOTIFICATION_METHOD = "getNotifications"
+    const val CREATE_SOS_METHOD = "createSOSRequest"
+    const val ARREST_NOW_METHOD = "arrestCriminals"
 
     /***
      * Soap Request methods

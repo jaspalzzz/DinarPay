@@ -1,45 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/header"
+            android:id="@+id/headerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
             android:layout_marginLeft="@dimen/margin"
             android:layout_marginTop="@dimen/margin_small"
             android:layout_marginRight="@dimen/margin"
             android:layout_marginBottom="@dimen/margin_small">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:layout_centerVertical="true"
                 android:id="@+id/cancelBt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:padding="@dimen/padding_x_small"
-                android:src="@drawable/ic_cancel_black_24dp"></androidx.appcompat.widget.AppCompatImageView>
+                android:layout_alignParentStart="true"
+                android:padding="@dimen/padding_small"
+                android:src="@drawable/ic_close">
+
+            </androidx.appcompat.widget.AppCompatImageView>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/switch_flashlight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:padding="@dimen/padding_x_small"
+                android:layout_alignParentEnd="true"
+                android:padding="@dimen/padding_small"
                 android:src="@drawable/ic_torch">
 
             </androidx.appcompat.widget.AppCompatImageView>
         </RelativeLayout>
 
         <com.journeyapps.barcodescanner.DecoratedBarcodeView
+            android:layout_below="@+id/headerLayout"
             android:id="@+id/barcode_scanner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/header"
-            app:zxing_preview_scaling_strategy="centerCrop"
-            app:zxing_use_texture_view="false"></com.journeyapps.barcodescanner.DecoratedBarcodeView>
-    </LinearLayout>
+            app:zxing_preview_scaling_strategy="fitXY"
+            app:zxing_use_texture_view="false">
+
+        </com.journeyapps.barcodescanner.DecoratedBarcodeView>
+    </RelativeLayout>
 </layout>

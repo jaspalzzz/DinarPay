@@ -33,9 +33,9 @@ class ReportCrimeActivity : BaseActivity<ActivityReportCrimeBinding, ServiceVM>(
 
     private lateinit var uploadAdapter: UploadMultiPhotosAdapter
     private lateinit var mediaPicker: PickMediaHelper
-    var countryCodePicker: CountryPickerDialog? = null
-    var officerCode: String? = ""
-    var crimeTypeList: ArrayList<CrimeTypeResponse> = ArrayList()
+    private var countryCodePicker: CountryPickerDialog? = null
+    private var officerCode: String? = ""
+    private var crimeTypeList: ArrayList<CrimeTypeResponse> = ArrayList()
 
 
     override val bindingActivity: ActivityBinding
@@ -95,6 +95,16 @@ class ReportCrimeActivity : BaseActivity<ActivityReportCrimeBinding, ServiceVM>(
 
     override fun subscribeToEvents(vm: ServiceVM) {
         binding.vm = vm
+
+        vm.networkError.observe(this, Observer {
+            if (it) {
+                alertDialogShow(
+                    this,
+                    getString(R.string.no_network_title),
+                    getString(R.string.no_network_connection)
+                )
+            }
+        })
 
         vm.crimeLocationError.observe(this, Observer {
             alertDialogShow(this, getString(R.string.alert), getString(it))
@@ -231,7 +241,15 @@ class ReportCrimeActivity : BaseActivity<ActivityReportCrimeBinding, ServiceVM>(
     override fun onImagePicked(path: String, request: Int) {
         var file = File(path)
         var image = UploadImageModel(1, file.name, path)
-        uploadAdapter.addImage(image)
+        if (uploadAdapter.getImageListSize() <= 10) {
+            uploadAdapter.addImage(image)
+        } else {
+            alertDialogShow(
+                this,
+                getString(R.string.info),
+                getString(R.string.criminal_upload_limit_msg)
+            )
+        }
     }
 
     override fun onError(message: String) {

@@ -25,39 +25,43 @@
                 app:backText="@{true}"
                 app:layout_constraintTop_toTopOf="parent"></include>
 
-
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipeRefesh"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="?attr/actionBarSize">
+                android:background="@drawable/top_corner_primary_bg">
 
-                <RelativeLayout
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/swipeRefesh"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginBottom="?attr/actionBarSize">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/criminalList"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/margin"
-                        android:layout_marginTop="@dimen/margin"
-                        android:layout_marginRight="@dimen/margin"
-                        android:layout_marginBottom="@dimen/margin_small" />
+                        android:layout_height="match_parent">
 
-                    <include
-                        layout="@layout/empty_data_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        app:isEmptyLayout="@{isEmptyLayout}"
-                        app:title="@{@string/no_data_found}"></include>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/criminalList"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
 
-                </RelativeLayout>
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                        <include
+                            layout="@layout/empty_data_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            app:isEmptyLayout="@{isEmptyLayout}"
+                            app:title="@{@string/no_data_found}"></include>
+
+                    </RelativeLayout>
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            </RelativeLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <include layout="@layout/criminal_list_filter_layout"></include>
+        <include
+            android:id="@+id/filterView"
+            layout="@layout/criminal_list_filter_layout"></include>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

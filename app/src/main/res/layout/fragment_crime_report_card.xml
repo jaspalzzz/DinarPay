@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="vm"
@@ -22,8 +22,6 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -53,22 +51,23 @@
             android:layout_height="match_parent">
 
             <androidx.appcompat.widget.AppCompatTextView
+                tools:text="aaaaaaa"
                 android:id="@+id/crimeTypText"
                 style="@style/CustomSmallDarkTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
                 android:text="@string/crime_type"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatTextView>
 
             <androidx.appcompat.widget.AppCompatTextView
+                tools:text="aaaaaaa"
                 android:id="@+id/caseIdText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin"
                 android:text="@string/case_id"
-                app:layout_constraintRight_toLeftOf="@+id/caseId"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/crimeTypText">
 
             </androidx.appcompat.widget.AppCompatTextView>
@@ -80,12 +79,13 @@
                 android:layout_height="wrap_content"
                 android:text="@{item.caseId}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/caseIdText"
+                app:layout_constraintStart_toEndOf="@+id/caseIdText"
                 app:layout_constraintTop_toTopOf="@+id/crimeTypText">
 
             </androidx.appcompat.widget.AppCompatTextView>
 
             <androidx.appcompat.widget.AppCompatTextView
+                tools:text="aaaaaaa"
                 android:id="@+id/crimeTyp"
                 style="@style/CustomMediumDarkTextView"
                 android:layout_width="match_parent"
@@ -102,10 +102,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
                 android:text="@string/crime_scene"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/crimeTyp"></androidx.appcompat.widget.AppCompatTextView>
 
             <androidx.appcompat.widget.AppCompatTextView
+                tools:text="aaaaaaa"
                 android:id="@+id/crimeScene"
                 style="@style/CustomMediumDarkTextView"
                 android:layout_width="match_parent"
@@ -120,10 +121,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
                 android:text="@string/suspectors"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/crimeScene"></androidx.appcompat.widget.AppCompatTextView>
 
             <androidx.appcompat.widget.AppCompatTextView
+                tools:text="aaaaaaa"
                 android:id="@+id/suspects"
                 style="@style/CustomMediumDarkTextView"
                 android:layout_width="match_parent"
@@ -138,15 +140,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
                 android:text="@string/reported_date"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/suspects"></androidx.appcompat.widget.AppCompatTextView>
 
             <androidx.appcompat.widget.AppCompatTextView
+                tools:text="aaaaaaa"
                 android:id="@+id/reportedTime"
                 style="@style/CustomMediumDarkTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin"
+                android:layout_marginStart="@dimen/margin"
                 android:text="@{item.reportedDate}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/reportedTimeText"
@@ -161,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
                 android:text="@string/case_photos"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/reportedTime"></androidx.appcompat.widget.AppCompatTextView>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -174,16 +178,18 @@
             </androidx.recyclerview.widget.RecyclerView>
 
             <androidx.appcompat.widget.AppCompatTextView
+                tools:text="aaaaaaa"
                 android:id="@+id/caseBriefText"
                 style="@style/CustomSmallDarkTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
                 android:text="@{item.caseBriefDesc}"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/casePhotosList"></androidx.appcompat.widget.AppCompatTextView>
 
             <androidx.appcompat.widget.AppCompatTextView
+                tools:text="aaaaaaa"
                 android:id="@+id/caseBrife"
                 style="@style/CustomMediumDarkTextView"
                 android:layout_width="match_parent"

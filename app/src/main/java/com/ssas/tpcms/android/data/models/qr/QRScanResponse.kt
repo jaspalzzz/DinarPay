@@ -10,5 +10,8 @@ data class QRScanResponse(
     var status: CommonResponse?,
     var profileResponse: OfficersProfileResponseModel?,
     var vehicleModel: QrVehicleResponse?,
-    var officeMission: MissionOfficerResponse?
+    var officeMission: MissionOfficerResponse?,
+    var officerCode: String? = "",
+    var vehicleCode: String? = "",
+    var specialMissionCode: String? = ""
 )

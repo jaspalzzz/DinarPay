@@ -1,6 +1,7 @@
 package com.ssas.tpcms.android.repo.service
 
 import android.app.Application
+import android.text.TextUtils
 import android.util.Log
 import com.ssas.tpcms.android.R
 import com.ssas.tpcms.android.data.models.CommonResponse
@@ -25,6 +26,32 @@ import kotlin.collections.ArrayList
  */
 class ServiceRepo(var application: Application) : BaseRepo() {
     val EMPTY_DEFAULT = ""
+
+    fun arrestNow(data: SoapObject): Single<CommonResponse> {
+        return Single.create<CommonResponse> { emitter ->
+            try {
+                var envelope =
+                    Connections.makeNetworkCall(data, Connections.ARREST_NOW_METHOD)
+                if (envelope.bodyIn is SoapFault) {
+                    var str: SoapFault = envelope.bodyIn as SoapFault
+                    var faultString = hadleSoapFault(str)
+                    Log.e("jaspal", "Soap Fault String=> $faultString")
+                    emitter.onError(throw SoapFaulException(faultString))
+                } else {
+                    var result: SoapObject = envelope.response as SoapObject
+                    Log.e("jaspal", "Soap api response => " + result)
+                    if (result != null) {
+                        var response = soapToCommonModel(result)
+                        emitter.onSuccess(response)
+                    } else {
+                        emitter.onError(EmptyResultException(application.getString(R.string.empty_result_exception)))
+                    }
+                }
+            } catch (e: Exception) {
+                emitter.onError(e)
+            }
+        }
+    }
 
     fun getCrimeTypes(): Single<ArrayList<CrimeTypeResponse>> {
         return Single.create<ArrayList<CrimeTypeResponse>> { emitter ->
@@ -56,7 +83,7 @@ class ServiceRepo(var application: Application) : BaseRepo() {
         var crimeTypeArrList = ArrayList<CrimeTypeResponse>()
         var length = result.size
         for (i in 0 until length) {
-            var crimeType = result.get(i) as SoapObject
+            var crimeType = result[i] as SoapObject
             var crimeDesc_Ar = crimeType.getPrimitiveProperty("crimeDesc_Ar") ?: EMPTY_DEFAULT
             var crimeDesc_En = crimeType.getPrimitiveProperty("crimeDesc_En") ?: EMPTY_DEFAULT
             var crimeName_Ar = crimeType.getPrimitiveProperty("crimeName_Ar") ?: EMPTY_DEFAULT
@@ -90,7 +117,7 @@ class ServiceRepo(var application: Application) : BaseRepo() {
                     var result: SoapObject = envelope.response as SoapObject
                     Log.e("jaspal", "Soap api response => " + result)
                     if (result != null) {
-                        var response = getMakeCrimeResponse(result)
+                        var response = soapToCommonModel(result)
                         emitter.onSuccess(response)
                     } else {
                         emitter.onError(EmptyResultException(application.getString(R.string.empty_result_exception)))
@@ -102,13 +129,6 @@ class ServiceRepo(var application: Application) : BaseRepo() {
         }
     }
 
-    private fun getMakeCrimeResponse(result: SoapObject): CommonResponse {
-        var responseVO = result.getProperty("responseCodeVO") as SoapObject
-        var responseCode = responseVO.getPrimitivePropertyAsString("responseCode")
-        var responseMesssge = responseVO.getPrimitivePropertyAsString("responseMessage")
-        var responseValue = responseVO.getPrimitivePropertyAsString("responseValue")
-        return CommonResponse(responseCode, responseMesssge, responseValue)
-    }
 
     fun getCrimeReports(data: SoapObject): Single<CrimeReportResponse> {
         return Single.create<CrimeReportResponse> { emitter ->
@@ -139,7 +159,7 @@ class ServiceRepo(var application: Application) : BaseRepo() {
     private fun soapToCrimeReportModel(result: SoapObject): CrimeReportResponse {
         var status = soapToCommonModel(result)
         var crimeReportList = soapToCrimeReportList(result)
-        return CrimeReportResponse(status,crimeReportList)
+        return CrimeReportResponse(status, crimeReportList)
     }
 
     private fun soapToCrimeReportList(result: SoapObject): ArrayList<CrimeReportDataItem>? {
@@ -155,37 +175,13 @@ class ServiceRepo(var application: Application) : BaseRepo() {
 
             /*Image handling code*/
             var imageList = ArrayList<ImageModel>()
-            var profilePhoto1 = crimeReport.getPrimitivePropertyAsString("casePhoto1") ?: EMPTY_DEFAULT
-            imageList.add(ImageModel(profilePhoto1.toString()))
-            var profilePhoto2 =
-                crimeReport.getPrimitivePropertyAsString("casePhoto2") ?: EMPTY_DEFAULT
-            imageList.add(ImageModel(profilePhoto2.toString()))
-            var profilePhoto3 =
-                crimeReport.getPrimitivePropertyAsString("casePhoto3") ?: EMPTY_DEFAULT
-            imageList.add(ImageModel(profilePhoto3.toString()))
-            var profilePhoto4 =
-                crimeReport.getPrimitivePropertyAsString("casePhoto4") ?: EMPTY_DEFAULT
-            imageList.add(ImageModel(profilePhoto4.toString()))
-            var profilePhoto5 =
-                crimeReport.getPrimitivePropertyAsString("casePhoto5") ?: EMPTY_DEFAULT
-            imageList.add(ImageModel(profilePhoto5.toString()))
-            var profilePhoto6 =
-                crimeReport.getPrimitivePropertyAsString("casePhoto6") ?: EMPTY_DEFAULT
-            imageList.add(ImageModel(profilePhoto6.toString()))
-            var profilePhoto7 =
-                crimeReport.getPrimitivePropertyAsString("casePhoto7") ?: EMPTY_DEFAULT
-            imageList.add(ImageModel(profilePhoto7.toString()))
-            var profilePhoto8 =
-                crimeReport.getPrimitivePropertyAsString("casePhoto8") ?: EMPTY_DEFAULT
-            imageList.add(ImageModel(profilePhoto8.toString()))
-            var profilePhoto9 =
-                crimeReport.getPrimitiveProperty("casePhoto9") ?: EMPTY_DEFAULT
 
-            var profilePhoto10 =
-                crimeReport.getPrimitivePropertyAsString("casePhoto10") ?: EMPTY_DEFAULT
-            imageList.add(ImageModel(profilePhoto10.toString()))
-
-            imageList.add(ImageModel(profilePhoto9.toString()))
+            for (i in 1..10) {
+                var profilePhoto = crimeReport.getPrimitiveProperty("casePhoto$i") ?: EMPTY_DEFAULT
+                if (!TextUtils.isEmpty(profilePhoto.toString())) {
+                    imageList.add(ImageModel(profilePhoto.toString()))
+                }
+            }
             /************************************************************************************/
 
             var cityName = crimeReport.getPrimitiveProperty("cityName") ?: EMPTY_DEFAULT
@@ -309,11 +305,7 @@ class ServiceRepo(var application: Application) : BaseRepo() {
     private fun soapToCrimnalRecord(result: SoapObject): CrimnalProfileResponse {
         var criminalProfileArrList = ArrayList<CrimnalProfileRecordModel>()
 
-        var responseVO = result.getProperty("responseCodeVO") as SoapObject
-        var responseCode = responseVO.getPrimitivePropertyAsString("responseCode")
-        var responseMesssge = responseVO.getPrimitivePropertyAsString("responseMessage")
-        var responseValue = responseVO.getPrimitivePropertyAsString("responseValue")
-        var status = CommonResponse(responseCode, responseMesssge, responseValue)
+        var status = soapToCommonModel(result)
 
         var criminalProfileList: SoapObject? =
             result.getProperty("criminalProfileList") as? SoapObject
@@ -398,37 +390,13 @@ class ServiceRepo(var application: Application) : BaseRepo() {
 
                 var imageList = ArrayList<ImageModel>()
 
-                var profilePhoto1 =
-                    criminalProfile.getPrimitiveProperty("profilePhoto1") ?: EMPTY_DEFAULT
-                imageList.add(ImageModel(profilePhoto1.toString()))
-                var profilePhoto10 =
-                    criminalProfile.getPrimitiveProperty("profilePhoto10") ?: EMPTY_DEFAULT
-                imageList.add(ImageModel(profilePhoto10.toString()))
-                var profilePhoto2 =
-                    criminalProfile.getPrimitiveProperty("profilePhoto2") ?: EMPTY_DEFAULT
-                imageList.add(ImageModel(profilePhoto2.toString()))
-                var profilePhoto3 =
-                    criminalProfile.getPrimitiveProperty("profilePhoto3") ?: EMPTY_DEFAULT
-                imageList.add(ImageModel(profilePhoto3.toString()))
-                var profilePhoto4 =
-                    criminalProfile.getPrimitiveProperty("profilePhoto4") ?: EMPTY_DEFAULT
-                imageList.add(ImageModel(profilePhoto4.toString()))
-                var profilePhoto5 =
-                    criminalProfile.getPrimitiveProperty("profilePhoto5") ?: EMPTY_DEFAULT
-                imageList.add(ImageModel(profilePhoto5.toString()))
-                var profilePhoto6 =
-                    criminalProfile.getPrimitiveProperty("profilePhoto6") ?: EMPTY_DEFAULT
-                imageList.add(ImageModel(profilePhoto6.toString()))
-                var profilePhoto7 =
-                    criminalProfile.getPrimitiveProperty("profilePhoto7") ?: EMPTY_DEFAULT
-                imageList.add(ImageModel(profilePhoto7.toString()))
-                var profilePhoto8 =
-                    criminalProfile.getPrimitiveProperty("profilePhoto8") ?: EMPTY_DEFAULT
-                imageList.add(ImageModel(profilePhoto8.toString()))
-                var profilePhoto9 =
-                    criminalProfile.getPrimitiveProperty("profilePhoto9") ?: EMPTY_DEFAULT
-                imageList.add(ImageModel(profilePhoto9.toString()))
-
+                for (i in 1..10) {
+                    var profilePhoto =
+                        criminalProfile.getPrimitiveProperty("profilePhoto$i") ?: EMPTY_DEFAULT
+                    if (!TextUtils.isEmpty(profilePhoto.toString())) {
+                        imageList.add(ImageModel(profilePhoto.toString()))
+                    }
+                }
 
                 /*****************************************************************************/
 

@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="vm"
             type="com.ssas.tpcms.android.repo.service.ServiceVM" />
+
+        <variable
+            name="item"
+            type="com.ssas.tpcms.android.data.models.criminal_record.CrimnalProfileRecordModel" />
     </data>
+
     <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,19 +29,20 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:onClick="@{()->vm.onCancelButtonClick()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:onClick="@{()->vm.onCancelButtonClick()}"
                     android:padding="@dimen/padding_small"
                     android:src="@drawable/ic_cancel_black_24dp"></androidx.appcompat.widget.AppCompatImageView>
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
+                    base_image="@{item.profileImageList.get(0).image}"
                     android:layout_width="@dimen/upload_image_icon_width"
                     android:layout_height="@dimen/upload_image_icon_height"
                     android:layout_gravity="center"
-                    android:background="@drawable/fill_et_bg"></ImageView>
+                    android:background="@drawable/fill_et_bg"></androidx.appcompat.widget.AppCompatImageView>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/CustomMediumDarkTextView"
@@ -44,6 +52,7 @@
                     android:text="@string/crime_name"></androidx.appcompat.widget.AppCompatTextView>
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:text="@={vm.crimeName}"
                     android:id="@+id/crimnalNameEt"
                     style="@style/EditRegularFillStyle"
                     android:layout_width="match_parent"
@@ -59,6 +68,7 @@
                     android:text="@string/location"></androidx.appcompat.widget.AppCompatTextView>
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:text="@={vm.crimeLocation}"
                     android:id="@+id/LocationEt"
                     style="@style/EditRegularFillStyle"
                     android:layout_width="match_parent"
@@ -90,6 +100,7 @@
                     android:text="@string/remarks"></androidx.appcompat.widget.AppCompatTextView>
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:text="@={vm.crimeLocation}"
                     android:id="@+id/remarksEt"
                     style="@style/EditRegularFillStyle"
                     android:layout_width="match_parent"
@@ -98,6 +109,7 @@
                     android:hint="@string/type"></androidx.appcompat.widget.AppCompatEditText>
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:onClick="@{()->vm.onArrestNowClick()}"
                     style="@style/CustomPrimaryButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

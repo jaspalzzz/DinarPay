@@ -21,54 +21,78 @@ class LoginUserIdFragment : BaseFragment<FragmentLoginUseridBinding, AuthVM>() {
         get() = FragmentBinding(R.layout.fragment_login_userid, AuthVM::class.java)
 
     override fun onCreateViewFragment(savedInstanceState: Bundle?) {
-
+        binding.firstDigitet.requestFocus()
     }
 
     override fun subscribeToEvents(vm: AuthVM) {
+        resetObserbers(vm)
         binding.vm = vm
 
+        vm.networkError.observe(this, Observer {
+            if (isLifeCycleResumed()) {
+                if (it) {
+                    alertDialogShow(
+                        context!!,
+                        getString(R.string.no_network_title),
+                        getString(R.string.no_network_connection)
+                    )
+                }
+            }
+        })
+
         vm.userIdFirstDigit.observe(this, Observer {
-            if (it?.length == 1) {
-                binding.secondDigitet.requestFocus()
-            } else if (it?.length == 0) {
-                binding.firstDigitet.clearFocus()
-                binding.firstDigitet.requestFocus()
+            if (isLifeCycleResumed()) {
+                if (it?.length == 1) {
+                    binding.secondDigitet.requestFocus()
+                } else if (it?.length == 0) {
+                    binding.firstDigitet.clearFocus()
+                    binding.firstDigitet.requestFocus()
+                }
             }
         })
         vm.userIdSecondDigit.observe(this, Observer {
-            if (it?.length == 1) {
-                binding.thirdDigitet.requestFocus()
-            } else if (it?.length == 0) {
-                binding.firstDigitet.requestFocus()
+            if (isLifeCycleResumed()) {
+                if (it?.length == 1) {
+                    binding.thirdDigitet.requestFocus()
+                } else if (it?.length == 0) {
+                    binding.firstDigitet.requestFocus()
+                }
             }
         })
         vm.userIdThirdDigit.observe(this, Observer {
-            if (it?.length == 1) {
-                binding.fourthDigitet.requestFocus()
-            } else if (it?.length == 0) {
-                binding.secondDigitet.requestFocus()
+            if (isLifeCycleResumed()) {
+                if (it?.length == 1) {
+                    binding.fourthDigitet.requestFocus()
+                } else if (it?.length == 0) {
+                    binding.secondDigitet.requestFocus()
+                }
             }
         })
 
         vm.userIdFourthDigit.observe(this, Observer {
-            if (it?.length == 1) {
-                binding.fifthDigitet.requestFocus()
-            } else if (it?.length == 0) {
-                binding.thirdDigitet.requestFocus()
+            if (isLifeCycleResumed()) {
+                if (it?.length == 1) {
+                    binding.fifthDigitet.requestFocus()
+                } else if (it?.length == 0) {
+                    binding.thirdDigitet.requestFocus()
+                }
             }
         })
 
         vm.userIdFiveDigit.observe(this, Observer {
-            if (it?.length == 1) {
-                Utils.hideKeyboardOnClick(context!!, binding.fifthDigitet)
-                enableVerifyButton()
-            } else if (it?.length == 0) {
-                binding.fourthDigitet.requestFocus()
-                disableVerifyButton()
+            if (isLifeCycleResumed()) {
+                if (it?.length == 1) {
+                    //Utils.hideKeyboardOnClick(context!!, binding.fifthDigitet)
+                    enableVerifyButton()
+                } else if (it?.length == 0) {
+                    binding.fourthDigitet.requestFocus()
+                    disableVerifyButton()
+                }
             }
         })
 
         vm.officerLoginResponse.observe(this, Observer {
+
             when (it.status) {
                 Status.LOADING -> {
                     (context as LoginActivity).showCircularProgress()
@@ -97,11 +121,24 @@ class LoginUserIdFragment : BaseFragment<FragmentLoginUseridBinding, AuthVM>() {
         })
 
         vm.clickEvents.observe(this, Observer {
-            when (it) {
-                AuthClickEvents.LOGIN_VERIFY_USERID_CLICK -> {
+            if(isLifeCycleResumed()){
+                when (it) {
+                    AuthClickEvents.LOGIN_VERIFY_USERID_CLICK -> {
+                    }
                 }
             }
         })
+    }
+
+    private fun resetObserbers(vm: AuthVM) {
+        vm.networkError.removeObservers(this)
+        vm.userIdFirstDigit.removeObservers(this)
+        vm.userIdSecondDigit.removeObservers(this)
+        vm.userIdThirdDigit.removeObservers(this)
+        vm.userIdFourthDigit.removeObservers(this)
+        vm.userIdFiveDigit.removeObservers(this)
+        vm.clickEvents.removeObservers(this)
+        vm.officerLoginResponse.removeObservers(this)
     }
 
     private fun enableVerifyButton() {

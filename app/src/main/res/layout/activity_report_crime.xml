@@ -22,6 +22,8 @@
             app:layout_constraintTop_toTopOf="parent"></include>
 
         <androidx.core.widget.NestedScrollView
+            android:scrollbars="none"
+            android:background="@drawable/top_corner_primary_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -39,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/crime_location"
                     app:layout_constraintBaseline_toBaselineOf="@+id/getlocation"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatTextView>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -50,7 +52,7 @@
                     android:onClick="@{()->vm.onGetLocationClick()}"
                     android:padding="@dimen/padding_small"
                     android:text="@string/get_location"
-                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatTextView>
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -66,10 +68,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/crimeLocationText"></androidx.appcompat.widget.AppCompatEditText>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_marginTop="@dimen/margin"
+                    style="@style/CustomMediumDarkTextView"
+                    android:text="@string/upload_Image"
                     android:id="@+id/uploadImageText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/crimeLocationEt">
 
                 </androidx.appcompat.widget.AppCompatTextView>
@@ -81,9 +86,10 @@
                     app:layout_constraintTop_toBottomOf="@+id/uploadImageText"></androidx.recyclerview.widget.RecyclerView>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    app:layout_constraintStart_toStartOf="parent"
                     android:id="@+id/crimeTypeText"
                     style="@style/CustomMediumDarkTextView"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
                     android:nestedScrollingEnabled="false"
@@ -103,7 +109,7 @@
                     android:onClick="@{()->vm.onCrimeTypeClick()}"
                     android:text="@={vm.crimeType}"
                     app:layout_constraintTop_toBottomOf="@+id/crimeTypeText"
-                    tools:layout_editor_absoluteX="16dp"></androidx.appcompat.widget.AppCompatEditText>
+                    ></androidx.appcompat.widget.AppCompatEditText>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/suspectNameText"
@@ -112,8 +118,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
                     android:text="@string/suspect_name"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/crimeTypeEt"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/suspectNameText"
+                    android:text="@string/optional"
+                    style="@style/CustomMediumTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </androidx.appcompat.widget.AppCompatTextView>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/suspectNameEt"
@@ -134,7 +150,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
                     android:text="@string/crime_brief"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/suspectNameEt"></androidx.appcompat.widget.AppCompatTextView>
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -159,7 +175,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
                     android:text="@string/crime_name"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/crimeBriefEt"></androidx.appcompat.widget.AppCompatTextView>
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -181,7 +197,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
                     android:text="@string/crime_scene_text"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/crimeNameEt"></androidx.appcompat.widget.AppCompatTextView>
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -204,8 +220,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
                     android:text="@string/national_id"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/crimeSceneEt"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/nationalIdText"
+                    android:text="@string/optional"
+                    style="@style/CustomMediumTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </androidx.appcompat.widget.AppCompatTextView>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/nationalIdEt"
@@ -227,8 +253,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
                     android:text="@string/passport_number"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/nationalIdEt"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/passportNumberText"
+                    android:text="@string/optional"
+                    style="@style/CustomMediumTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </androidx.appcompat.widget.AppCompatTextView>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/passportNumberEt"
@@ -250,8 +286,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
                     android:text="@string/driving_license_number"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/passportNumberEt"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/drivingLicenseNumberText"
+                    android:text="@string/optional"
+                    style="@style/CustomMediumTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </androidx.appcompat.widget.AppCompatTextView>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/drivingLicensenumberEt"
@@ -272,8 +318,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
                     android:text="@string/contact_number"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/drivingLicensenumberEt" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/mobileNumberLable"
+                    android:text="@string/optional"
+                    style="@style/CustomMediumTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </androidx.appcompat.widget.AppCompatTextView>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/numberView"
@@ -300,6 +356,7 @@
                             android:layout_width="@dimen/flag_icon_width"
                             android:layout_height="@dimen/flag_icon_height"
                             android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginStart="@dimen/margin_small"
                             android:scaleType="fitXY"></androidx.appcompat.widget.AppCompatImageView>
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -347,8 +404,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
                     android:text="@string/suspect_known_address"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/mobileNumberError"></androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/suspectAddressText"
+                    android:text="@string/optional"
+                    style="@style/CustomMediumTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </androidx.appcompat.widget.AppCompatTextView>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/suspectAddressEt"

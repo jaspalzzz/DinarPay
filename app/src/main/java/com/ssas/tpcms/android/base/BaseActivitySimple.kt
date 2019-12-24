@@ -24,8 +24,11 @@ import com.google.android.gms.location.LocationServices
 import com.ssas.tpcms.android.utils.PermissionResultListener
 import com.ssas.tpcms.android.utils.Utils
 import com.google.android.material.snackbar.Snackbar
+import com.ssas.tpcms.android.R
 import com.ssas.tpcms.android.ui.dialogs.ProgressCircularDialog
 import com.ssas.tpcms.android.ui.dialogs.ProgressDialog
+import com.ssas.tpcms.android.utils.ContextWrapper
+import com.ssas.tpcms.android.utils.MyContextWrapper
 import io.reactivex.annotations.Nullable
 
 abstract class BaseActivitySimple : AppCompatActivity() {
@@ -48,6 +51,10 @@ abstract class BaseActivitySimple : AppCompatActivity() {
         this.mPermissionResultListener = mPermissionResultListener
     }
 
+    override fun attachBaseContext(newBase: Context?) {
+        var context = ContextWrapper.wrap(newBase!!, "ar")
+        super.attachBaseContext(context)
+    }
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +68,7 @@ abstract class BaseActivitySimple : AppCompatActivity() {
     }
 
     fun transperantStatusBar() {
-        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
+        if (Build.VERSION.SDK_INT in 19..20) {
             setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true)
         }
         if (Build.VERSION.SDK_INT >= 19) {
@@ -105,7 +112,7 @@ abstract class BaseActivitySimple : AppCompatActivity() {
     fun snackBarAction(view: View, message: Int, clickListener: View.OnClickListener) {
         val snackbar = Snackbar
             .make(view, message, Snackbar.LENGTH_LONG)
-            .setAction("Retry", clickListener)
+            .setAction(getString(R.string.retry), clickListener)
         snackbar.show()
     }
 
@@ -113,7 +120,7 @@ abstract class BaseActivitySimple : AppCompatActivity() {
     fun alertDialogShow(context: Context, message: String) {
         val builder = AlertDialog.Builder(context)
         builder.setMessage(message)
-        builder.setPositiveButton("Ok") { dialogInterface, i -> dialogInterface.dismiss() }
+        builder.setPositiveButton(getString(R.string.ok)) { dialogInterface, i -> dialogInterface.dismiss() }
         val alertDialog = builder.create()
         alertDialog.show()
     }
@@ -122,7 +129,7 @@ abstract class BaseActivitySimple : AppCompatActivity() {
         val builder = AlertDialog.Builder(context)
         builder.setMessage(message)
         builder.setTitle(title)
-        builder.setPositiveButton("Ok") { dialogInterface, i -> dialogInterface.dismiss() }
+        builder.setPositiveButton(getString(R.string.ok)) { dialogInterface, i -> dialogInterface.dismiss() }
         val alertDialog = builder.create()
         alertDialog.show()
     }
@@ -135,7 +142,7 @@ abstract class BaseActivitySimple : AppCompatActivity() {
         val builder = AlertDialog.Builder(context)
         builder.setMessage(message)
         builder.setCancelable(false)
-        builder.setPositiveButton("Ok", okLister)
+        builder.setPositiveButton(getString(R.string.ok), okLister)
         val alertDialog = builder.create()
         alertDialog.show()
     }
@@ -148,12 +155,14 @@ abstract class BaseActivitySimple : AppCompatActivity() {
         val builder = AlertDialog.Builder(context)
         builder.setMessage(message)
         builder.setCancelable(false)
-        builder.setPositiveButton("Ok", okLister)
-        builder.setNegativeButton("Cancel", object : DialogInterface.OnClickListener {
-            override fun onClick(dialog: DialogInterface?, which: Int) {
-                dialog?.dismiss()
-            }
-        })
+        builder.setPositiveButton(getString(R.string.ok), okLister)
+        builder.setNegativeButton(
+            getString(R.string.cancel),
+            object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface?, which: Int) {
+                    dialog?.dismiss()
+                }
+            })
         val alertDialog = builder.create()
         alertDialog.show()
     }
@@ -170,7 +179,7 @@ abstract class BaseActivitySimple : AppCompatActivity() {
         builder.setMessage(message)
         builder.setTitle(title)
         builder.setPositiveButton(okButtonTitle, okLister)
-        builder.setNegativeButton("cancel", canelLister)
+        builder.setNegativeButton(getString(R.string.cancel), canelLister)
         val alertDialog = builder.create()
         alertDialog.show()
     }
@@ -184,9 +193,11 @@ abstract class BaseActivitySimple : AppCompatActivity() {
         val builder = AlertDialog.Builder(context)
         builder.setMessage(message)
         builder.setPositiveButton(okButtonTitle, okLister)
-        builder.setNegativeButton("cancel", DialogInterface.OnClickListener { dialogInterface, i ->
-            dialogInterface.dismiss()
-        })
+        builder.setNegativeButton(
+            getString(R.string.cancel),
+            DialogInterface.OnClickListener { dialogInterface, i ->
+                dialogInterface.dismiss()
+            })
         val alertDialog = builder.create()
         alertDialog.show()
     }

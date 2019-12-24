@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ssas.tpcms.android.base.ItemClickListener
 import com.ssas.tpcms.android.data.models.criminal_record.CrimnalProfileRecordModel
+import com.ssas.tpcms.android.data.models.qr.MissionOfficerResponse
 import java.util.ArrayList
 
 /**
@@ -27,7 +28,7 @@ abstract class BaseRecyclerView<V : RecyclerView.ViewHolder> : RecyclerView.Adap
 
     override fun onBindViewHolder(holder: V, position: Int) {
         holder.itemView.setOnClickListener {
-            listener.onItemClick(this,position)
+            listener.onItemClick(this, position)
         }
         onBindViewHolderMethod(holder, position)
     }

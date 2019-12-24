@@ -15,15 +15,18 @@ import com.ssas.tpcms.android.repo.service.ServiceVM
  */
 
 private const val ARG_CRIMINAL_DATA = "ARG_CRIMINAL_DATA"
+private const val ARG_OFFICER_CODE = "ARG_OFFICER_CODE"
 
 class CrimnalCardFragment : BaseBottomSheetFragment<FragmentCrimnalCardBinding, ServiceVM>() {
     private var criminalData: String = ""
+    private var officerCode: String = ""
     lateinit var criminalDataModel: CrimnalProfileRecordModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme)
         arguments?.let {
+            officerCode = it.getString(ARG_OFFICER_CODE).toString()
             criminalData = it.getString(ARG_CRIMINAL_DATA).toString()
         }
     }
@@ -62,17 +65,18 @@ class CrimnalCardFragment : BaseBottomSheetFragment<FragmentCrimnalCardBinding, 
         })
     }
 
-    fun moveArresNowDialog() {
-        var arrestDialog = ArrestNowFragment()
+    private fun moveArresNowDialog() {
+        var arrestDialog = ArrestNowFragment.newInstance(criminalData, officerCode)
         arrestDialog.show(fragmentManager, arrestDialog.tag)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(data: String) =
+        fun newInstance(data: String, officerCode: String) =
             CrimnalCardFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_CRIMINAL_DATA, data)
+                    putString(ARG_OFFICER_CODE, officerCode)
                 }
             }
     }

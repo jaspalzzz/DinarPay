@@ -44,9 +44,9 @@ class QrScannerFragment : BaseBottomSheetFragment<FragmentQrScannerBinding, Home
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme)
-        arguments?.let {
-            qrCardType = it.getString(ARG_QR_CARD_TYPE)
-        }
+        /* arguments?.let {
+             qrCardType = it.getString(ARG_QR_CARD_TYPE)
+         }*/
     }
 
 
@@ -99,8 +99,9 @@ class QrScannerFragment : BaseBottomSheetFragment<FragmentQrScannerBinding, Home
 
     private fun cameraSettings(): CameraSettings {
         val s = CameraSettings()
-        s.isAutoFocusEnabled = true
+       // s.isAutoFocusEnabled = true
         s.requestedCameraId = 0
+       //s.isContinuousFocusEnabled = true
         return s
     }
 
@@ -150,6 +151,11 @@ class QrScannerFragment : BaseBottomSheetFragment<FragmentQrScannerBinding, Home
 
     interface QrCallBackListener {
         fun onQRResult(qrType: String, resultString: String)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
     }
 
     companion object {

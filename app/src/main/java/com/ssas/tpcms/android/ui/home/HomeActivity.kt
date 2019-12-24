@@ -16,9 +16,10 @@ import com.ssas.tpcms.android.MApplication
 import com.ssas.tpcms.android.R
 import com.ssas.tpcms.android.base.BaseActivity
 import com.ssas.tpcms.android.base.ItemClickListener
+import com.ssas.tpcms.android.data.models.auth.OfficersProfileResponseModel
 import com.ssas.tpcms.android.data.prefs.PrefKeys
 import com.ssas.tpcms.android.data.prefs.PrefMain
-import com.ssas.tpcms.android.data.service.ServiceListModel
+import com.ssas.tpcms.android.data.models.service.ServiceListModel
 import com.ssas.tpcms.android.databinding.ActivityHomeBinding
 import com.ssas.tpcms.android.repo.home.HomeVM
 import com.ssas.tpcms.android.ui.ConstantKeys
@@ -44,8 +45,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), ItemClickListe
     * location crime type crime name
     * */
 
-    lateinit var serviceAdapter: ServiceGridAdapter
-    var profileData: String? = ""
+    private lateinit var serviceAdapter: ServiceGridAdapter
+    private var profileData: String? = ""
     var officerCode: String? = ""
     private var qrCardType: String? = ""
     @Inject
@@ -58,9 +59,20 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), ItemClickListe
     override fun onCreateActivity(savedInstanceState: Bundle?) {
         MApplication.appComponent.inject(this)
         handleIntent(intent)
+        handlerLoginUserDetails()
         initListeners()
         inflaterServiceList()
         addDataRecords()
+    }
+
+    fun handlerLoginUserDetails() {
+        var profileData = Gson().fromJson<OfficersProfileResponseModel>(
+            prefMain[PrefKeys.OFFICER_PROFILE, ""],
+            OfficersProfileResponseModel::class.java
+        )
+        if (profileData != null) {
+            binding.userName = profileData.officerFirstnameAr
+        }
     }
 
     private fun handleIntent(intent: Intent?) {
@@ -82,11 +94,26 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), ItemClickListe
         }
 
         binding.qrScannerBt.setOnClickListener {
-            createQROptionPopupMenu(binding.qrScannerBt)
+            createScanQRMenuOptionPermissions()
         }
 
         binding.sosBtClick.setOnClickListener {
             sendSOS()
+        }
+    }
+
+    private fun createScanQRMenuOptionPermissions() {
+        if (PermissionUtils.hasCameraPermission(this, PermissionUtils.CAMERA_PERMISSION)) {
+            //createQROptionPopupMenu(binding.qrScannerBt)
+            var qrDilaog = QrScannerFragment()
+            qrDilaog.setQRResultListener(this)
+            qrDilaog.show(supportFragmentManager, qrDilaog.tag)
+        } else {
+            PermissionUtils.requestPermissions(
+                this,
+                PermissionUtils.CAMERA_PERMISSION,
+                PermissionUtils.PERMISSION_REQUEST_CAMERA_CODE
+            )
         }
     }
 
@@ -123,7 +150,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), ItemClickListe
         val list = ArrayList<ServiceListModel>()
         list.add(
             ServiceListModel(
-                R.drawable.ic_crimnal_db,
+                R.drawable.ic_criminal_db,
                 getString(R.string.crimnal_database_search)
             )
         )
@@ -149,12 +176,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), ItemClickListe
     }
 
     private fun createGridView(recyclerView: RecyclerView): RecyclerView {
-        var layoutManager = GridLayoutManager(this, 3)
-        var itemDecotation = GridSpacingItemDecoration(
-            3,
-            resources.getDimension(R.dimen.margin).toInt(), false
-        )
-        recyclerView.addItemDecoration(itemDecotation)
+        var layoutManager = GridLayoutManager(this, 2)
+        /* var itemDecotation = GridSpacingItemDecoration(
+             2,
+             resources.getDimension(R.dimen.margin_small).toInt(), false
+         )
+         recyclerView.addItemDecoration(itemDecotation)*/
         recyclerView.layoutManager = layoutManager
         return recyclerView
     }
@@ -201,41 +228,52 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), ItemClickListe
         popup.show()
     }
 
-    private fun createQROptionPopupMenu(view: View) {
-        val popup = PopupMenu(this, view)
-        popup.menuInflater.inflate(R.menu.qr_option_menu, popup.menu)
-        popup.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.officerCard -> {
-                    var qrFragment =
-                        QrScannerFragment.newInstance(
-                            QrScannerFragment.ARG_OFFICE_CARD
-                        )
-                    qrFragment.setQRResultListener(this)
-                    qrFragment.show(supportFragmentManager, qrFragment.tag)
-                }
-                R.id.vehicleCard -> {
-                    var qrFragment = QrScannerFragment.newInstance(
-                        QrScannerFragment.ARG_VEHICLE_CARD
-                    )
-                    qrFragment.setQRResultListener(this)
-                    qrFragment.show(supportFragmentManager, qrFragment.tag)
-                }
-                R.id.MissionCard -> {
-                    var qrFragment =
-                        QrScannerFragment.newInstance(
-                            QrScannerFragment.ARG_MISSION_CARD
-                        )
-                    qrFragment.setQRResultListener(this)
-                    qrFragment.show(supportFragmentManager, qrFragment.tag)
-                }
-            }
-            true
-        }
-        popup.show()
-    }
+    /* private fun createQROptionPopupMenu(view: View) {
+         val popup = PopupMenu(this, view)
+         popup.menuInflater.inflate(R.menu.qr_option_menu, popup.menu)
+         popup.setOnMenuItemClickListener { item ->
+             when (item.itemId) {
+                 R.id.officerCard -> {
+                     var qrFragment =
+                         QrScannerFragment.newInstance(
+                             QrScannerFragment.ARG_OFFICE_CARD
+                         )
+                     qrFragment.setQRResultListener(this)
+                     qrFragment.show(supportFragmentManager, qrFragment.tag)
+                 }
+                 R.id.vehicleCard -> {
+                     var qrFragment = QrScannerFragment.newInstance(
+                         QrScannerFragment.ARG_VEHICLE_CARD
+                     )
+                     qrFragment.setQRResultListener(this)
+                     qrFragment.show(supportFragmentManager, qrFragment.tag)
+                 }
+                 R.id.MissionCard -> {
+                     var qrFragment =
+                         QrScannerFragment.newInstance(
+                             QrScannerFragment.ARG_MISSION_CARD
+                         )
+                     qrFragment.setQRResultListener(this)
+                     qrFragment.show(supportFragmentManager, qrFragment.tag)
+                 }
+             }
+             true
+         }
+         popup.show()
+     }*/
 
     override fun subscribeToEvents(vm: HomeVM) {
+
+        vm.networkError.observe(this, Observer {
+            if (it) {
+                alertDialogShow(
+                    this,
+                    getString(R.string.no_network_title),
+                    getString(R.string.no_network_connection)
+                )
+            }
+        })
+
         vm.qrProfileResponse.observe(this, Observer {
             when (it.status) {
                 Status.LOADING -> {
@@ -257,8 +295,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), ItemClickListe
                     ) {
                         if (response?.profileResponse != null) {
                             var profileDataSerfial = Gson().toJson(response?.profileResponse)
-                            var profileDialog = UserProfileFragment.newInstance(profileDataSerfial)
-                            profileDialog.show(supportFragmentManager, profileDialog.tag)
+                            var profileDialog = UserProfileFragment.newInstance(
+                                profileDataSerfial,
+                                response?.missionList
+                            )
+                            profileDialog.show(supportFragmentManager, "")
                         } else {
                             alertDialogShow(this, response.status?.responseValue.toString())
                         }
@@ -313,49 +354,46 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), ItemClickListe
                             false
                         )
                     ) {
-                        if (qrCardType == QrScannerFragment.ARG_OFFICE_CARD) {
-                            if (response?.profileResponse != null) {
-                                var profileDataSerfial = Gson().toJson(response?.profileResponse)
-                                openOfficerCard(profileDataSerfial)
-                            } else {
-                                alertDialogShow(
-                                    this,
-                                    response.status?.responseValue.toString()
-                                )
-                            }
+                        if (response?.profileResponse != null) {
+                            var profileDataSerfial = Gson().toJson(response?.profileResponse)
+                            openOfficerCard(profileDataSerfial)
+                        } else {
+                            alertDialogShow(
+                                this,
+                                response.status?.responseValue.toString()
+                            )
                         }
+
                     } else if (response.status?.responseCode == "OPS10009" && response.status?.responseMsg.equals(
                             "Success",
                             false
                         )
                     ) {
-                        if (qrCardType == QrScannerFragment.ARG_VEHICLE_CARD) {
-                            if (response?.vehicleModel != null) {
-                                var vehicleDataSerfial = Gson().toJson(response?.vehicleModel)
-                                openVehicleCard(vehicleDataSerfial)
-                            } else {
-                                alertDialogShow(
-                                    this,
-                                    response.status?.responseValue.toString()
-                                )
-                            }
+                        if (response?.vehicleModel != null) {
+                            var vehicleDataSerfial = Gson().toJson(response?.vehicleModel)
+                            openVehicleCard(vehicleDataSerfial)
+                        } else {
+                            alertDialogShow(
+                                this,
+                                response.status?.responseValue.toString()
+                            )
                         }
+
                     } else if (response.status?.responseCode == "OPS10011" && response.status?.responseMsg.equals(
                             "Success",
                             false
                         )
                     ) {
-                        if (qrCardType == QrScannerFragment.ARG_MISSION_CARD) {
-                            if (response?.officeMission != null) {
-                                var missionSerfial = Gson().toJson(response?.officeMission)
-                                var profileDataSerfial = Gson().toJson(response?.profileResponse)
-                                openMissionCard(missionSerfial, profileDataSerfial)
-                            } else {
-                                alertDialogShow(
-                                    this,
-                                    response.status?.responseValue.toString()
-                                )
-                            }
+                        if (response?.officeMission != null) {
+                            var missionSerfial = Gson().toJson(response?.officeMission)
+                            var profileDataSerfial = Gson().toJson(response?.profileResponse)
+                            openMissionCard(missionSerfial, profileDataSerfial)
+                        } else {
+                            alertDialogShow(
+                                this,
+                                response.status?.responseValue.toString()
+                            )
+
                         }
                     } else {
                         alertDialogShow(this!!, response.status?.responseValue.toString())
@@ -388,7 +426,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), ItemClickListe
 
     override fun onQRResult(qrType: String, resultString: String) {
         qrCardType = qrType
-        when (qrType) {
+        viewModel.getQRCodeScanResult(officerCode, false, false, false, false, resultString)
+        /*when (qrType) {
             QrScannerFragment.ARG_OFFICE_CARD -> {
                 viewModel.getQRCodeScanResult(
                     officerCode,
@@ -421,7 +460,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), ItemClickListe
                 )
 
             }
-        }
+        }*/
     }
 
     override fun onRequestPermissionsResult(
@@ -431,11 +470,19 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), ItemClickListe
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            PermissionUtils.PERMISSION_REQUEST_READ_EXTERNAL_STORAGE_CODE -> {
+            PermissionUtils.PERMISSION_LOCATION_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     sendSOS()
                 } else {
                     alertDialogShow(this, getString(R.string.location_permission_msg))
+                }
+            }
+
+            PermissionUtils.PERMISSION_REQUEST_CAMERA_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    createScanQRMenuOptionPermissions()
+                } else {
+                    alertDialogShow(this, getString(R.string.camera_permission_msg))
                 }
             }
         }

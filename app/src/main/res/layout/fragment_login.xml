@@ -8,33 +8,51 @@
             type="com.ssas.tpcms.android.repo.auth.AuthVM" />
     </data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:padding="@dimen/margin">
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/logoView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="bottom"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/sliderView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="1">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/imageCard"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin"
+                android:elevation="@dimen/evevation"
+                app:cardCornerRadius="40dp"
+                app:cardElevation="@dimen/evevation">
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:elevation="@dimen/evevation"
-                app:cardCornerRadius="60dp">
+                android:layout_marginTop="@dimen/margin"
+                android:src="@drawable/lang_wording_first">
 
-                <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:scaleType="fitXY"></ImageView>
-            </androidx.cardview.widget.CardView>
+            </androidx.appcompat.widget.AppCompatImageView>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/lang_wording_second">
+
+            </androidx.appcompat.widget.AppCompatImageView>
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/CustomLargeDarkTextView"
@@ -47,23 +65,81 @@
                 android:text="@string/tripoli_police">
 
             </androidx.appcompat.widget.AppCompatTextView>
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/sliderView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="@dimen/margin"
-            android:layout_weight="1"></RelativeLayout>
+            app:layout_constraintBottom_toTopOf="@+id/loginButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logoView"
+            app:layout_constraintVertical_weight="1">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/sliderPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_large">
+
+            </androidx.viewpager.widget.ViewPager>
+
+        </LinearLayout>
+
+        <!-- <androidx.constraintlayout.widget.ConstraintLayout
+             android:layout_width="match_parent"
+             android:layout_height="0dp"
+             android:layout_margin="@dimen/margin"
+             android:layout_weight="1">
+
+             <androidx.appcompat.widget.AppCompatTextView
+                 app:layout_constraintHorizontal_chainStyle="packed"
+                 app:layout_constraintStart_toStartOf="parent"
+                 android:id="@+id/logo_text"
+                 app:layout_constraintEnd_toStartOf="@+id/logo"
+                 app:layout_constraintTop_toTopOf="@+id/logo"
+                 android:text="@string/powered_by"
+                 style="@style/CustomSmallDarkTextView"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content">
+
+             </androidx.appcompat.widget.AppCompatTextView>
+             <androidx.appcompat.widget.AppCompatImageView
+                 app:layout_constraintHorizontal_chainStyle="packed"
+                 android:id="@+id/logo"
+                 app:layout_constraintStart_toEndOf="@+id/logo_text"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentBottom="true"
+                 android:layout_centerHorizontal="true"
+                 android:src="@drawable/sss_logo">
+
+             </androidx.appcompat.widget.AppCompatImageView>
+
+         </androidx.constraintlayout.widget.ConstraintLayout>-->
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/loginButton"
             style="@style/CustomPrimaryButton"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
+            android:gravity="center"
             android:onClick="@{()->vm.onLoginClick()}"
-            android:text="@string/login_text">
+            android:text="@string/login_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sliderView"
+            app:layout_constraintWidth_percent="0.6"
+            app:layout_goneMarginTop="@dimen/margin">
 
         </androidx.appcompat.widget.AppCompatButton>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#525555</color>
-    <color name="colorPrimaryDark">#525555</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#4250CE</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#4250CE</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorText">#000000</color>
     <color name="colorGray">#C7C9C9</color>
     <color name="colorGrayDark">#818181</color>
     <color name="colorRed">#E74949</color>
     <color name="colorTransperant">#00000000</color>
+    <color name="colorAuthStatusBar">#2D7AE8</color>
+    <color name="colorButtonDisable">#589BFC</color>
+    <color name="colorWindowBg">#F7F6FA</color>
 </resources>

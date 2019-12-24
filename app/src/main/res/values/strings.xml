@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">DinarPay</string>
-    <string name="app_id">com.ssas.tpcms.android.provider</string>
+    <string name="app_id" translatable="false">com.ssas.tpcms.android.provider</string>
 
     <!--Image picker strings-->
     <string name="pick_image">Pick image from</string>
     <string name="cant_pick_image">Can\'t pick this image.</string>
     <string-array name="source_items">
         <item>Camera</item>
+        <item>Gallery</item>
         <item>Gallery</item>
     </string-array>
     <string name="location_permission_msg">Please turn on GPS location permission from settings to get device current location.</string>
@@ -16,7 +17,7 @@
 
     <!--Login screen-->
 
-    <string name="tripoli_police">Libya Embassy</string>
+    <string name="tripoli_police">Tripoli Police</string>
     <string name="login_text">Login</string>
     <string name="verify_now">Verify now</string>
     <string name="user_id_text">User ID</string>
@@ -25,6 +26,7 @@
     <string name="verify_account_text">Verify account</string>
     <string name="device_id">Device ID</string>
     <string name="device_id_error">Please enter Device ID carefully.</string>
+    <string name="login_faceId">Login with Face ID</string>
 
     <!--Home Screen-->
     <string name="dialy_notifications_text">Daily Notifications</string>
@@ -59,7 +61,6 @@
     <string name="permission_prisioners">Permission to Carry Perisioners: </string>
     <string name="permission_night_pertrol">Permission for Night Petrol: </string>
     <string name="permission_drive_outside_city">Permission for Night Petrol: </string>
-    <string name="yes">Yes</string>
 
     <!--Mission Card -->
     <string name="mission_card">Mission Card</string>
@@ -89,10 +90,12 @@
 
     <!--Roprt a crime-->
     <string name="crime_location">Crime Location</string>
+    <string name="crime_city">Crime City</string>
     <string name="get_location">Get Location</string>
-    <string name="uload_Image">Upload Image</string>
+    <string name="upload_Image">Upload Image</string>
     <string name="suspect_name">Suspect Name(s) </string>
     <string name="crime_name">Crime Name</string>
+    <string name="crime_name_seach_hint">Type crime name...</string>
     <string name="crime_brief">Crime Brief</string>
     <string name="crime_scene_text">Crime Scene</string>
     <string name="national_id">National ID</string>
@@ -114,12 +117,14 @@
     <string name="crime_type_error">Please select crime type.</string>
     <string name="crime_name_error">Please enter crime name.</string>
     <string name="alert">Alert</string>
+    <string name="info">Info</string>
 
     <!--profile Strings-->
     <string name="profile_card">Profile Card</string>
     <string name="dateofbirth">Date of Birth</string>
     <string name="mobile">Mobile: </string>
     <string name="id_number">ID Number</string>
+    <string name="mission_error">You are not associated with any mission.</string>
 
     <!--Arrest No screen-->
     <string name="pictures">Pictures</string>
@@ -132,13 +137,22 @@
     <!--Extra-->
     <string name="exception_msg">Opps! something went wrong.</string>
     <string name="filter_by">Filter By</string>
+    <string name="clear_filter">Clear Filter</string>
     <string name="empty_result_exception">Server Error: Opps! No Data found</string>
     <string name="no_data_found">No Data Found</string>
     <string name="signout_msg">Are you sure want to sign out?</string>
     <string name="location_error">Opps! Enable to get location. Please check or turn on phone GPS services.</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_network_title">Opps! No Internet</string>
+    <string name="no_network_connection">Please check internet connectivity or Turn on your internet connection to use services.</string>
+    <string name="criminal_image_limit_msg">Only 5 pictures are allowed.</string>
+    <string name="criminal_upload_limit_msg">Only 10 pictures are allowed.</string>
+    <string name="powered_by">Powered by</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="retry">Retry</string>
+    <string name="welcome_msg">Welcome %1$s</string>
 
 
 </resources>

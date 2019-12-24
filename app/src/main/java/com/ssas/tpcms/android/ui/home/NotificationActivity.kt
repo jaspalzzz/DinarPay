@@ -99,6 +99,15 @@ class NotificationActivity : BaseActivity<ActivityNotificationBinding, HomeVM>()
 
 
     override fun subscribeToEvents(vm: HomeVM) {
+
+        vm.networkError.observe(this, Observer {
+            if(it){
+                emptyDataLayout()
+                stopRefeshingData()
+                alertDialogShow(this,getString(R.string.no_network_title),getString(R.string.no_network_connection))
+            }
+        })
+
         vm.notificationResponse.observe(this, Observer {
             when (it?.status) {
                 Status.LOADING -> {

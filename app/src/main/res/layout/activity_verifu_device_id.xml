@@ -1,80 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="vm"
             type="com.ssas.tpcms.android.repo.auth.AuthVM" />
     </data>
+
     <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".ui.auth.VerifuDeviceIdActivity">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/CustomLargeDarkTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/padiding"
-            android:text="@string/verify_user_text"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </androidx.appcompat.widget.AppCompatTextView>
+        android:orientation="vertical">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/margin">
+                android:layout_height="match_parent">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/appLogoCard"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/margin_large_space"
+                    android:elevation="@dimen/evevation"
+                    app:cardCornerRadius="60dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/appLogo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/margin_small_extra"
+                        android:src="@drawable/app_logo">
+
+                    </de.hdodenhof.circleimageview.CircleImageView>
+
+                </androidx.cardview.widget.CardView>
+
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/deviceIdText"
                     style="@style/CustomMediumDarkTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_x_large"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/margin_x_large"
-                    android:layout_marginRight="@dimen/margin_x_large"
-                    android:text="@string/device_id">
+                    android:text="@string/device_id"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/appLogoCard">
 
                 </androidx.appcompat.widget.AppCompatTextView>
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:text="@={vm.deviceId}"
                     android:id="@+id/deviceId"
-                    style="@style/EditRegularFillStyle"
-                    android:layout_width="match_parent"
+                    style="@style/EditRegularStyle"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/deviceIdText"
-                    android:layout_marginLeft="@dimen/margin_x_large"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:layout_marginRight="@dimen/margin_x_large"
+                    android:layout_marginTop="@dimen/margin"
                     android:imeOptions="actionDone"
-                    android:inputType="text">
+                    android:inputType="text"
+                    android:text="@={vm.deviceId}"
+                    android:gravity="start"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/deviceIdText"
+                    app:layout_constraintWidth_percent=".8">
 
                 </androidx.appcompat.widget.AppCompatEditText>
 
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:onClick="@{()->vm.onDeviceIdSubmitClick()}"
                     android:id="@+id/sumbitDeviceIdBt"
                     style="@style/CustomPrimaryButton"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:text="@string/verify_now">
+                    android:layout_marginTop="@dimen/margin_x_large"
+                    android:onClick="@{()->vm.onDeviceIdSubmitClick()}"
+                    android:text="@string/verify_now"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/deviceId"
+                    app:layout_constraintWidth_percent=".6">
 
                 </androidx.appcompat.widget.AppCompatButton>
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

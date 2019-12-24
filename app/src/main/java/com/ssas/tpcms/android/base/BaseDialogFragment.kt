@@ -16,7 +16,7 @@ import com.ssas.tpcms.android.MApplication
 abstract class BaseDialogFragment<T : ViewDataBinding, V : AndroidViewModel> : DialogFragment() {
     lateinit var binding: T
     lateinit var viewModel: V
-    lateinit var mContext: Context
+    private lateinit var mContext: Context
 
     abstract val dialogBinding: DialogBinding
 

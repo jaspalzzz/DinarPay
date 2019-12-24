@@ -16,6 +16,7 @@ import androidx.lifecycle.AndroidViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.ssas.tpcms.android.MApplication
+import com.ssas.tpcms.android.R
 import com.ssas.tpcms.android.ui.dialogs.ProgressCircularDialog
 import com.ssas.tpcms.android.ui.dialogs.ProgressDialog
 
@@ -79,7 +80,7 @@ abstract class BaseBottomSheetFragment<T : ViewDataBinding, V : AndroidViewModel
 
     fun snackBarAction(view: View, message: Int, clickListener: View.OnClickListener) {
         val snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-            .setAction("Retry", clickListener)
+            .setAction(getString(R.string.retry), clickListener)
         snackbar.show()
     }
 
@@ -87,7 +88,7 @@ abstract class BaseBottomSheetFragment<T : ViewDataBinding, V : AndroidViewModel
     fun alertDialogShow(context: Context, message: String) {
         val builder = AlertDialog.Builder(context)
         builder.setMessage(message)
-        builder.setPositiveButton("Ok") { dialogInterface, i -> dialogInterface.dismiss() }
+        builder.setPositiveButton(getString(R.string.ok)) { dialogInterface, i -> dialogInterface.dismiss() }
         val alertDialog = builder.create()
         alertDialog.show()
     }
@@ -96,7 +97,7 @@ abstract class BaseBottomSheetFragment<T : ViewDataBinding, V : AndroidViewModel
         val builder = AlertDialog.Builder(context)
         builder.setMessage(message)
         builder.setTitle(title)
-        builder.setPositiveButton("Ok") { dialogInterface, i -> dialogInterface.dismiss() }
+        builder.setPositiveButton(getString(R.string.ok)) { dialogInterface, i -> dialogInterface.dismiss() }
         val alertDialog = builder.create()
         alertDialog.show()
     }
@@ -108,7 +109,21 @@ abstract class BaseBottomSheetFragment<T : ViewDataBinding, V : AndroidViewModel
     ) {
         val builder = AlertDialog.Builder(context)
         builder.setMessage(message)
-        builder.setPositiveButton("Ok", okLister)
+        builder.setPositiveButton(getString(R.string.ok), okLister)
+        val alertDialog = builder.create()
+        alertDialog.show()
+    }
+
+    fun alertDialogShow(
+        context: Context,
+        title: String,
+        message: String,
+        okLister: DialogInterface.OnClickListener
+    ) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setPositiveButton(getString(R.string.ok), okLister)
         val alertDialog = builder.create()
         alertDialog.show()
     }
@@ -125,7 +140,7 @@ abstract class BaseBottomSheetFragment<T : ViewDataBinding, V : AndroidViewModel
         builder.setMessage(message)
         builder.setTitle(title)
         builder.setPositiveButton(okButtonTitle, okLister)
-        builder.setNegativeButton("cancel", canelLister)
+        builder.setNegativeButton(getString(R.string.cancel), canelLister)
         val alertDialog = builder.create()
         alertDialog.show()
     }

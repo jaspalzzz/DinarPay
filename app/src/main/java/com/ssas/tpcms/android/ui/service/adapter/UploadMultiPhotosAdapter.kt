@@ -73,6 +73,10 @@ class UploadMultiPhotosAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         imageList.add(UploadImageModel(0, "", ""))
     }
 
+    fun getImageListSize(): Int {
+        return imageList.size
+    }
+
     fun addImage(item: UploadImageModel) {
         imageList.add(item)
         notifyDataSetChanged()

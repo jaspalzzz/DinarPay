@@ -164,13 +164,72 @@ class HomeRepo(var application: Application) : BaseRepo() {
     }
 
     private fun soapToLoginResponse(result: SoapObject): QrProfileResponse {
-        var responseVO = result.getProperty("responseCodeVO") as? SoapObject
-        var responseCode = responseVO?.getPrimitivePropertyAsString("responseCode")
-        var responseMesssge = responseVO?.getPrimitivePropertyAsString("responseMessage")
-        var responseValue = responseVO?.getPrimitivePropertyAsString("responseValue")
-        var status = CommonResponse(responseCode, responseMesssge, responseValue)
+        var status = soapToCommonModel(result)
         var profileModal = soapToProfileModel(result)
-        return QrProfileResponse(status, profileModal)
+        var missionModel = soapToMissionsModel(result)
+        return QrProfileResponse(status, profileModal, missionModel)
+    }
+
+    private fun soapToMissionsModel(result: SoapObject): ArrayList<MissionOfficerResponse>? {
+        var missionArrList = ArrayList<MissionOfficerResponse>()
+        var missionResponseList: SoapObject? =
+            result.getProperty("specialMissionList") as? SoapObject ?: return null
+        if (missionResponseList != null) {
+            for (i in 0 until missionResponseList.propertyCount) {
+                var mission = missionResponseList?.getProperty(i) as SoapObject
+                var activationDate = mission.getPrimitiveProperty("activationDate") ?: EMPTY_DEFAULT
+                var allowedWeaponType =
+                    mission.getPrimitiveProperty("allowedWeaponType") ?: EMPTY_DEFAULT
+                var attachmentPhoto1 =
+                    mission.getPrimitiveProperty("attachmentPhoto1") ?: EMPTY_DEFAULT
+                var attachmentPhoto2 =
+                    mission.getPrimitiveProperty("attachmentPhoto2") ?: EMPTY_DEFAULT
+                var attachmentPhoto3 =
+                    mission.getPrimitiveProperty("attachmentPhoto3") ?: EMPTY_DEFAULT
+                var expiryDate = mission.getPrimitiveProperty("expiryDate") ?: EMPTY_DEFAULT
+                var missionDescription =
+                    mission.getPrimitiveProperty("missionDescription") ?: EMPTY_DEFAULT
+                var missionType = mission.getPrimitiveProperty("missionType") ?: EMPTY_DEFAULT
+                var officersProfileId =
+                    mission.getPrimitiveProperty("officersProfileId") ?: EMPTY_DEFAULT
+                var otherAttachments =
+                    mission.getPrimitiveProperty("otherAttachments") ?: EMPTY_DEFAULT
+                var otherMissionInformation =
+                    mission.getPrimitiveProperty("otherMissionInformation") ?: EMPTY_DEFAULT
+                var otherNotes = mission.getPrimitiveProperty("otherNotes") ?: EMPTY_DEFAULT
+                var permissionToCarryWeapon =
+                    mission.getPrimitiveProperty("permissionToCarryWeapon") ?: EMPTY_DEFAULT
+                var specialMissionQRCode =
+                    mission.getPrimitiveProperty("specialMissionQRCode") ?: EMPTY_DEFAULT
+                var spmissionId = mission.getPrimitiveProperty("spmissionId") ?: EMPTY_DEFAULT
+                var statusCode = mission.getPrimitiveProperty("statusCode") ?: EMPTY_DEFAULT
+                var statusId = mission.getPrimitiveProperty("statusId") ?: EMPTY_DEFAULT
+                var weaponSerialNumber =
+                    mission.getPrimitiveProperty("weaponSerialNumber") ?: EMPTY_DEFAULT
+                var missionModel = MissionOfficerResponse(
+                    activationDate.toString(),
+                    allowedWeaponType.toString(),
+                    attachmentPhoto1.toString(),
+                    attachmentPhoto2.toString(),
+                    attachmentPhoto3.toString(),
+                    expiryDate.toString(),
+                    missionDescription.toString(),
+                    missionType.toString(),
+                    officersProfileId.toString(),
+                    otherAttachments.toString(),
+                    otherMissionInformation.toString(),
+                    otherNotes.toString(),
+                    permissionToCarryWeapon.toString(),
+                    specialMissionQRCode.toString(),
+                    spmissionId.toString(),
+                    statusCode.toString(),
+                    statusId.toString(),
+                    weaponSerialNumber.toString()
+                )
+                missionArrList.add(missionModel)
+            }
+        }
+        return missionArrList
     }
 
     fun processQRCodeScanning(data: SoapObject): Single<QRScanResponse> {
@@ -199,16 +258,24 @@ class HomeRepo(var application: Application) : BaseRepo() {
         }
     }
 
-    fun soapToQRResponse(result: SoapObject): QRScanResponse {
-        var responseVO = result.getProperty("responseCodeVO") as? SoapObject
-        var responseCode = responseVO?.getPrimitivePropertyAsString("responseCode")
-        var responseMesssge = responseVO?.getPrimitivePropertyAsString("responseMessage")
-        var responseValue = responseVO?.getPrimitivePropertyAsString("responseValue")
-        var status = CommonResponse(responseCode, responseMesssge, responseValue)
+    private fun soapToQRResponse(result: SoapObject): QRScanResponse {
+        var status = soapToCommonModel(result)
+        var isOfficerCode = result.getPrimitiveProperty("isOfficerQRCodeScanning") ?: EMPTY_DEFAULT
+        var isVehicleCode = result.getPrimitiveProperty("isVehicleQRCodeScanning") ?: EMPTY_DEFAULT
+        var isSpecialMissionCode =
+            result.getPrimitiveProperty("isSpecialMissionOfficerQRCodeScanning") ?: EMPTY_DEFAULT
         var profileModal = soapToProfileModel(result)
         var vehicleModel = soapToVehicleModel(result)
         var officeMission = soapToMissionReponse(result)
-        return QRScanResponse(status, profileModal, vehicleModel, officeMission)
+        return QRScanResponse(
+            status,
+            profileModal,
+            vehicleModel,
+            officeMission,
+            isOfficerCode.toString(),
+            isVehicleCode.toString(),
+            isSpecialMissionCode.toString()
+        )
     }
 
     private fun soapToMissionReponse(result: SoapObject): MissionOfficerResponse? {

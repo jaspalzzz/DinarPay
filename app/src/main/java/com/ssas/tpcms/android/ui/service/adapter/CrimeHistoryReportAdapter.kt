@@ -47,10 +47,18 @@ class CrimeHistoryReportAdapter : FooterRecyclerView() {
 
     override fun onBindViewHolderMethod(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is Holder) {
-            holder.binding.item = crimeReportList.get(position)
+            if (crimeReportList.isNotEmpty()) {
+                holder.binding.item = crimeReportList.get(position)
+            }
+
+            if (crimeReportList[position].imageList?.isNotEmpty()!!) {
+                holder.binding.crimeImage = crimeReportList[position].imageList?.get(0)?.image ?: ""
+            }
+
             holder.binding.root.setOnClickListener {
                 listener.onItemClick(this, position)
             }
+
             holder.binding.executePendingBindings()
         }
     }

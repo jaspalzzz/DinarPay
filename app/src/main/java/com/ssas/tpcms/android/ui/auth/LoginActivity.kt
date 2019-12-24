@@ -1,8 +1,13 @@
 package com.ssas.tpcms.android.ui.auth
 
+import android.content.Context
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
+import android.os.LocaleList
 import android.view.View
-import androidx.core.os.bundleOf
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.ssas.tpcms.android.MApplication
@@ -12,13 +17,19 @@ import com.ssas.tpcms.android.data.prefs.PrefKeys
 import com.ssas.tpcms.android.data.prefs.PrefMain
 import com.ssas.tpcms.android.databinding.ActivityLoginBinding
 import com.ssas.tpcms.android.ui.ConstantKeys
+import com.ssas.tpcms.android.utils.ContextWrapper
+import com.ssas.tpcms.android.utils.MyContextWrapper
+import java.util.*
 import javax.inject.Inject
+
 
 class LoginActivity : BaseBindingActivity<ActivityLoginBinding>() {
 
     private lateinit var navController: NavController
     @Inject
     lateinit var prefMain: PrefMain
+    private lateinit var locale: Locale
+
 
     override val bindingActivity: ActivityBinding
         get() = ActivityBinding(R.layout.activity_login)
@@ -28,7 +39,9 @@ class LoginActivity : BaseBindingActivity<ActivityLoginBinding>() {
         init()
         initToolbar()
         deviceIdAuthChecking()
+        transperantStatusBar()
     }
+
 
     private fun deviceIdAuthChecking() {
         if (prefMain[PrefKeys.DEVICE_ID, ""].isNullOrEmpty()) {
@@ -92,5 +105,11 @@ class LoginActivity : BaseBindingActivity<ActivityLoginBinding>() {
         var bundle = Bundle()
         bundle.putString(ConstantKeys.USER_ID, userId)
         navController.navigate(R.id.loginVerifyFragment, bundle)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    fun changeStatusBarColor(colorId: Int) {
+        var window = window
+        window.setStatusBarColor(ActivityCompat.getColor(this, colorId));
     }
 }

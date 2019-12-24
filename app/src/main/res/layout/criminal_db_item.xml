@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="item"
             type="com.ssas.tpcms.android.data.models.criminal_record.CrimnalProfileRecordModel" />
@@ -9,6 +11,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/padiding"
+        android:paddingRight="@dimen/padiding"
+        android:paddingBottom="@dimen/padiding"
         android:gravity="center">
 
         <androidx.cardview.widget.CardView
@@ -16,10 +21,9 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:cardCornerRadius="@dimen/margin_small"
-            app:cardElevation="@dimen/evevation"
             app:layout_constraintDimensionRatio="2:1.4"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -33,12 +37,12 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/merchant_name"
             style="@style/CustomMediumDarkTextView"
-            first_name="@{item.firstnameEn}"
+            first_name="@{item.firstnameAr}"
             last_name="@{item.lastnameEn}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/merchant_logo_card" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -46,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{item.cityOfLiving}"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/merchant_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

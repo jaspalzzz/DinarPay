@@ -28,6 +28,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
     }
 
     dataBinding {
@@ -49,8 +50,8 @@ dependencies {
     /*Basic libs*/
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlin_version}"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation "androidx.appcompat:appcompat:$appcompatVersion"
+    implementation "androidx.core:core-ktx:$ktxVersion"
 
     /*constraint layout dependancy*/
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout"
@@ -63,14 +64,12 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$retrofitInterceptor"
 
-
     /*Gson serrialization*/
     implementation "com.google.code.gson:gson:$gsonVersion"
 
     /*Dagger Dependency Injection*/
     implementation "com.google.dagger:dagger:$daggerVersion"
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.legacy:legacy-support-v4:$legecySupportVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     compileOnly 'javax.annotation:jsr250-api:1.0'
 
@@ -90,16 +89,20 @@ dependencies {
     /*log printer*/
     implementation "com.jakewharton.timber:timber:$timberVersion"
 
-    implementation('com.journeyapps:zxing-android-embedded:3.6.0') { transitive = false }
-    implementation 'com.google.zxing:core:3.3.0'
+    /*QR code handling API*/
+    implementation("com.journeyapps:zxing-android-embedded:$journeyappsVersion") { transitive = false }
+    implementation "com.google.zxing:core:$zxingVersion"
 
     /*multidex*/
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation "com.android.support:multidex:$multiDexVersion"
 
+    /*google Location services*/
+    implementation "com.google.android.gms:play-services-location:$locationServiceVersion"
+
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
 
     /*Testing tools*/
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
 }

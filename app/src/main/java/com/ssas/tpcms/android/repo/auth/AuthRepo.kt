@@ -20,7 +20,7 @@ import org.kxml2.kdom.Node
  * Created by Jaspal on 11/30/2019.
  */
 
-class AuthRepo(var application: Application) : BaseRepo(){
+class AuthRepo(var application: Application) : BaseRepo() {
     val EMPTY_DEFAULT = ""
 
     /**
@@ -52,13 +52,9 @@ class AuthRepo(var application: Application) : BaseRepo(){
         }
     }
 
-    fun soapToLoginResponse(result: SoapObject, passCode: String): OfficerLoginResponse {
+    private fun soapToLoginResponse(result: SoapObject, passCode: String): OfficerLoginResponse {
 
-        var responseVO = result.getProperty("responseCodeVO") as SoapObject
-        var responseCode = responseVO.getPrimitivePropertyAsString("responseCode")
-        var responseMesssge = responseVO.getPrimitivePropertyAsString("responseMessage")
-        var responseValue = responseVO.getPrimitivePropertyAsString("responseValue")
-        var status = CommonResponse(responseCode, responseMesssge, responseValue)
+        var status = soapToCommonModel(result)
 
         var officerCodeString = result.getPrimitiveProperty("officerCode") ?: EMPTY_DEFAULT
 

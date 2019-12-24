@@ -2,6 +2,7 @@
 <layout>
 
     <data>
+
         <variable
             name="isEmptyLayout"
             type="Boolean" />
@@ -20,62 +21,82 @@
             app:backText="@{true}"
             app:layout_constraintTop_toTopOf="parent"></include>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/search_root"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin"
-            android:layout_marginTop="@dimen/margin_big"
-            android:layout_marginRight="@dimen/margin"
-            android:gravity="center"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.SearchView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_small"
-                android:layout_weight="1"
-                android:background="@drawable/form_et_bg" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/fill_et_small_redius_bg"
-                android:padding="@dimen/padding_small"
-                android:src="@drawable/ic_filter_list_black_24dp"></androidx.appcompat.widget.AppCompatImageView>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefesh"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="?attr/actionBarSize">
+            android:background="@drawable/top_corner_primary_bg"
+            android:orientation="vertical">
 
-            <RelativeLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/search_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginLeft="@dimen/margin"
+                android:layout_marginTop="@dimen/margin_big"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginRight="@dimen/margin"
+                android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/filterBt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fill_et_small_redius_bg"
+                    android:padding="@dimen/padding_small"
+                    android:src="@drawable/ic_filter"></androidx.appcompat.widget.AppCompatImageView>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/searchEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginLeft="@dimen/margin_small"
+                    android:layout_weight="1"
+                    android:background="@drawable/form_et_bg"
+                    android:drawableRight="@drawable/ic_search_black_24dp"
+                    android:focusableInTouchMode="true"
+                    android:focusedByDefault="false"
+                    android:hint="@string/crime_name_seach_hint"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="@dimen/padding_medium"
+                    android:singleLine="true" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefesh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/crimieHirtoryList"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:layout_marginTop="@dimen/margin"
-                    android:layout_marginRight="@dimen/margin"
-                    android:layout_marginBottom="@dimen/margin_small" />
+                    android:layout_height="match_parent">
 
-                <include
-                    layout="@layout/empty_data_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    app:isEmptyLayout="@{isEmptyLayout}"
-                    app:title="@{@string/no_data_found}"></include>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/crimieHirtoryList"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/margin"
+                        android:layout_marginLeft="@dimen/margin"
+                        android:layout_marginTop="@dimen/margin"
+                        android:layout_marginEnd="@dimen/margin"
+                        android:layout_marginRight="@dimen/margin"
+                        android:layout_marginBottom="@dimen/margin_small" />
 
-            </RelativeLayout>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                    <include
+                        layout="@layout/empty_data_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        app:isEmptyLayout="@{isEmptyLayout}"
+                        app:title="@{@string/no_data_found}"></include>
+
+                </RelativeLayout>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </LinearLayout>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

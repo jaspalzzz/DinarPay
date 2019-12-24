@@ -4,8 +4,11 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorWindowBg</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorWindowBg</item>
+        <item name="android:colorBackground">@color/colorWindowBg</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -28,6 +31,10 @@
 
     <style name="CustomRegularLightTextView" parent="CustomRegularTextView">
         <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="CustomRegularPrimaryTextView" parent="CustomRegularTextView">
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
     <style name="CustomMediumTextView" parent="android:Widget.TextView">
@@ -64,6 +71,10 @@
 
     <style name="CustomSmallDarkTextView" parent="CustomSmallTextView">
         <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="CustomSmallLightTextView" parent="CustomSmallTextView">
+        <item name="android:textColor">@color/colorWhite</item>
     </style>
 
     <style name="CustomRegularErrorTextView" parent="CustomSmallTextView">
@@ -111,12 +122,15 @@
         <item name="android:padding">@dimen/padding_medium</item>
     </style>
 
-    <style name="EditOTPStyle" parent="EditRegularStyle">
+    <style name="EditOTPStyle" parent="@android:style/Widget.EditText">
+        <item name="android:fontFamily">OpenSans-Regular.ttf</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
         <item name="android:layout_width">@dimen/otp_et_width</item>
         <item name="android:layout_height">@dimen/otp_et_height</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorText</item>
         <item name="android:background">@drawable/otp_et_bg</item>
-        <item name="android:textSize">@dimen/default_extra_big_text</item>
+        <item name="android:textSize">@dimen/default_text</item>
     </style>
 
     <style name="EditRegularNoBgStyle" parent="@android:style/Widget.EditText">

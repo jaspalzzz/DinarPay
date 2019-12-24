@@ -20,7 +20,7 @@ abstract class FooterRecyclerView : RecyclerView.Adapter<RecyclerView.ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return if (viewType == FOOTER_VIEW) {
-            FooterHolder(LayoutInflater.from(parent.context).inflate(R.layout.footer_loader, parent, false))
+            FooterHolder(inflater.inflate(R.layout.footer_loader, parent, false))
         } else {
             onCreateHolderMethod(parent, viewType)
         }
@@ -41,7 +41,7 @@ abstract class FooterRecyclerView : RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     override fun getItemCount(): Int {
-        return count()+1
+        return count() + 1
     }
 
     abstract fun onCreateHolderMethod(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
@@ -66,8 +66,10 @@ abstract class FooterRecyclerView : RecyclerView.Adapter<RecyclerView.ViewHolder
     internal inner class FooterHolder(view: View) : RecyclerView.ViewHolder(view) {
         init {
             progressbar = itemView.findViewById(R.id.bottomProgressBar)
+            if (count() == 0) {
+                progressbar?.visibility = View.GONE
+            }
         }
     }
-
 
 }

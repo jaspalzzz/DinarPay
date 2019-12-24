@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.google.android.material.snackbar.Snackbar
+import com.ssas.tpcms.android.R
 
 open class BaseFragmentSimple: Fragment() {
 
@@ -25,7 +26,7 @@ open class BaseFragmentSimple: Fragment() {
 
     fun snackBarAction(view: View, message: Int, clickListener: View.OnClickListener) {
         val snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-            .setAction("Retry", clickListener)
+            .setAction(getString(R.string.retry), clickListener)
         snackbar.show()
     }
 
@@ -33,7 +34,7 @@ open class BaseFragmentSimple: Fragment() {
     fun alertDialogShow(context: Context, message: String) {
         val builder = AlertDialog.Builder(context)
         builder.setMessage(message)
-        builder.setPositiveButton("Ok") { dialogInterface, i -> dialogInterface.dismiss() }
+        builder.setPositiveButton(getString(R.string.ok)) { dialogInterface, i -> dialogInterface.dismiss() }
         val alertDialog = builder.create()
         alertDialog.show()
     }
@@ -42,7 +43,7 @@ open class BaseFragmentSimple: Fragment() {
         val builder = AlertDialog.Builder(context)
         builder.setMessage(message)
         builder.setTitle(title)
-        builder.setPositiveButton("Ok") { dialogInterface, i -> dialogInterface.dismiss() }
+        builder.setPositiveButton(getString(R.string.ok)) { dialogInterface, i -> dialogInterface.dismiss() }
         val alertDialog = builder.create()
         alertDialog.show()
     }
@@ -50,7 +51,7 @@ open class BaseFragmentSimple: Fragment() {
     fun alertDialogShow(context: Context, message: String, okLister: DialogInterface.OnClickListener) {
         val builder = AlertDialog.Builder(context)
         builder.setMessage(message)
-        builder.setPositiveButton("Ok", okLister)
+        builder.setPositiveButton(getString(R.string.ok), okLister)
         val alertDialog = builder.create()
         alertDialog.show()
     }
@@ -67,7 +68,7 @@ open class BaseFragmentSimple: Fragment() {
         builder.setMessage(message)
         builder.setTitle(title)
         builder.setPositiveButton(okButtonTitle, okLister)
-        builder.setNegativeButton("cancel", canelLister)
+        builder.setNegativeButton(getString(R.string.cancel), canelLister)
         val alertDialog = builder.create()
         alertDialog.show()
     }

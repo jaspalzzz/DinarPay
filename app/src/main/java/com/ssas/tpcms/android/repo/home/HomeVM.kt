@@ -56,6 +56,16 @@ class HomeVM(application: Application) : AndroidViewModel(application) {
         clickEvents.value = HomeClickEvents.CANCLE_BUTTON_CLICK
     }
 
+    fun onMyProfileTabClick(){
+        clickEvents.value = HomeClickEvents.MY_PROFILE_CLICK
+
+    }
+
+    fun onMissionTabClick(){
+        clickEvents.value = HomeClickEvents.MY_PROFILE_MISSION_CLICK
+
+    }
+
     /*Soap API Repo instacne*/
     var repo = HomeRepo(application)
 
@@ -119,8 +129,9 @@ class HomeVM(application: Application) : AndroidViewModel(application) {
             obj.addProperty("mobileAppSmartSecurityKey", Connections.MOBILE_APP_SMART_SECURITY_KEY)
             obj.addProperty("mobileAppUserName", Connections.MOBILE_APP_USER_NAME)
             obj.addProperty("loginOfficersCode", officerCodeString)
+            obj.addProperty("commonQRCode", qrCodeString)
 
-            if (isOfficerScan) {
+          /*  if (isOfficerScan) {
                 obj.addProperty("isOfficerQRCodeScanning", "Y")
                 obj.addProperty("officersQRCode", qrCodeString)
             }
@@ -133,7 +144,7 @@ class HomeVM(application: Application) : AndroidViewModel(application) {
             if (isVehicleScan) {
                 obj.addProperty("isVehicleQRCodeScanning", "Y")
                 obj.addProperty("vehicleQRCode", qrCodeString)
-            }
+            }*/
             Log.e("jaspal", "QR scan Payload: " + obj)
 
             repo.processQRCodeScanning(obj)
@@ -194,6 +205,8 @@ class HomeVM(application: Application) : AndroidViewModel(application) {
                             APIResponse<NotificatonResponse>().onError(e) as APIResponse<NotificatonResponse>
                     }
                 })
+        }else{
+            networkError.value=true
         }
     }
 
@@ -233,6 +246,8 @@ class HomeVM(application: Application) : AndroidViewModel(application) {
                             APIResponse<CommonResponse>().onError(e) as APIResponse<CommonResponse>
                     }
                 })
+        }else{
+            networkError.value=true
         }
     }
 }

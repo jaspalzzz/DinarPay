@@ -1,8 +1,13 @@
 package com.ssas.tpcms.android.ui.service.crime_history
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView.OnEditorActionListener
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -14,16 +19,15 @@ import com.ssas.tpcms.android.R
 import com.ssas.tpcms.android.base.BaseActivity
 import com.ssas.tpcms.android.base.ItemClickListener
 import com.ssas.tpcms.android.data.models.crime_report.CrimeReportDataItem
-import com.ssas.tpcms.android.data.models.criminal_record.CrimnalProfileRecordModel
 import com.ssas.tpcms.android.databinding.ActivityCrimeHistoryReportBinding
 import com.ssas.tpcms.android.repo.service.ServiceVM
 import com.ssas.tpcms.android.ui.ConstantKeys
 import com.ssas.tpcms.android.ui.service.adapter.CrimeHistoryReportAdapter
-import com.ssas.tpcms.android.ui.service.crime_database.CrimnalCardFragment
 import com.ssas.tpcms.android.utils.Utils
 
+
 class CrimeHistoryReportActivity : BaseActivity<ActivityCrimeHistoryReportBinding, ServiceVM>(),
-    ItemClickListener {
+    ItemClickListener, CrimeReportFilerDialog.FilterCallbackListener {
 
     private lateinit var historyAdapter: CrimeHistoryReportAdapter
     var officerCode: String? = ""
@@ -31,7 +35,13 @@ class CrimeHistoryReportActivity : BaseActivity<ActivityCrimeHistoryReportBindin
     private var limit = 10
     private var loading = true
     private var isScrolling = false
-
+    /***
+     * Searh and filter params
+     * */
+    private var crimeName: String = ""
+    private var crimeLocation: String = ""
+    private var crimeType: String = ""
+    private var crimeCity: String = ""
 
     override val bindingActivity: ActivityBinding
         get() = ActivityBinding(R.layout.activity_crime_history_report, ServiceVM::class.java)
@@ -42,6 +52,44 @@ class CrimeHistoryReportActivity : BaseActivity<ActivityCrimeHistoryReportBindin
         inflateCrimeHistoryReportList()
         fetchCrimeReports()
         swipeRefesh()
+        handleSearchFilterView()
+    }
+
+    private fun handleSearchFilterView() {
+
+        binding.searchEt.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (TextUtils.isEmpty(s)) {
+                    hideSoftKeyboard(this@CrimeHistoryReportActivity)
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+        })
+
+        binding.searchEt.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                crimeName = binding.searchEt.text.toString().trim()
+                clearOldData()
+                fetchCrimeReports()
+                return@OnEditorActionListener true
+            }
+            false
+        })
+
+        binding.filterBt.setOnClickListener {
+            var filterDilaog = CrimeReportFilerDialog()
+            filterDilaog.setCallBackListener(this)
+            filterDilaog.show(supportFragmentManager, filterDilaog.tag)
+        }
+
     }
 
     private fun handleIntent(intent: Intent?) {
@@ -58,7 +106,15 @@ class CrimeHistoryReportActivity : BaseActivity<ActivityCrimeHistoryReportBindin
     }
 
     private fun fetchCrimeReports() {
-        viewModel.getCrimeReports(officerCode ?: "", pageNumber, limit)
+        viewModel.getCrimeReports(
+            officerCode ?: "",
+            pageNumber,
+            limit,
+            crimeName,
+            crimeLocation,
+            crimeType,
+            crimeCity
+        )
     }
 
     private fun inflateCrimeHistoryReportList() {
@@ -99,6 +155,19 @@ class CrimeHistoryReportActivity : BaseActivity<ActivityCrimeHistoryReportBindin
     }
 
     override fun subscribeToEvents(vm: ServiceVM) {
+
+        vm.networkError.observe(this, Observer {
+            if (it) {
+                emptyDataLayout()
+                stopRefeshingData()
+                alertDialogShow(
+                    this,
+                    getString(R.string.no_network_title),
+                    getString(R.string.no_network_connection)
+                )
+            }
+        })
+
         vm.crimeReportResponse.observe(this, Observer {
             when (it?.status) {
                 Status.LOADING -> {
@@ -112,6 +181,12 @@ class CrimeHistoryReportActivity : BaseActivity<ActivityCrimeHistoryReportBindin
                         )
                     ) {
                         addCrimeReports(it?.response.crimeReportList)
+                    } else if (it?.response.status?.responseCode == "OPE10009" && it?.response.status?.responseMsg.equals(
+                            "Failure",
+                            false
+                        )
+                    ) {
+                        emptyDataLayout()
                     } else {
                         emptyDataLayout()
                         alertDialogShow(
@@ -151,10 +226,22 @@ class CrimeHistoryReportActivity : BaseActivity<ActivityCrimeHistoryReportBindin
     }
 
     private fun startRefreshingData() {
+        clearOldData()
+        clearFilterData()
+        fetchCrimeReports()
+    }
+
+    private fun clearFilterData() {
+        crimeName = ""
+        crimeLocation = ""
+        crimeType = ""
+        crimeCity = ""
+    }
+
+    private fun clearOldData() {
         historyAdapter.clearData()
         isScrolling = false
         pageNumber = 0
-        fetchCrimeReports()
     }
 
     private fun stopRefeshingData() {
@@ -183,5 +270,19 @@ class CrimeHistoryReportActivity : BaseActivity<ActivityCrimeHistoryReportBindin
         var crimeReportDataSerial = Gson().toJson(crimeReportData)
         var crimeReportDialog = CrimeReportCardFragment.newInstance(crimeReportDataSerial)
         crimeReportDialog.show(supportFragmentManager, crimeReportDialog.tag)
+    }
+
+    override fun onFilterSubmit(
+        crimeName: String,
+        crimeLocation: String,
+        crimeCity: String,
+        crimeTypeId: String
+    ) {
+        this.crimeName = crimeName
+        this.crimeLocation = crimeLocation
+        this.crimeCity = crimeCity
+        this.crimeType = crimeType
+        clearOldData()
+        fetchCrimeReports()
     }
 }
